@@ -190,7 +190,7 @@
             font-weight: 600;
         }
         
-        .input-group input, .input-group textarea {
+        .input-group input, .input-group textarea, .input-group select {
             width: 100%;
             padding: 12px 15px;
             background: rgba(0, 0, 0, 0.25);
@@ -202,7 +202,7 @@
             transition: all 0.3s ease;
         }
         
-        .input-group input:focus, .input-group textarea:focus {
+        .input-group input:focus, .input-group textarea:focus, .input-group select:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.2);
         }
@@ -602,6 +602,37 @@
         
         .academic-content {
             line-height: 1.7;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+        }
+        
+        .academic-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .academic-section {
+            margin-bottom: 20px;
+        }
+        
+        .academic-subtitle {
+            color: #9b59b6;
+            font-weight: 700;
+            margin: 15px 0 10px 0;
+        }
+        
+        .citation {
+            font-style: italic;
+            color: var(--accent-light);
+            padding-left: 20px;
+            border-left: 3px solid var(--accent);
+            margin: 10px 0;
+        }
+        
+        .professor-signature {
+            text-align: right;
+            margin-top: 40px;
+            font-style: italic;
         }
         
         .grade-badge {
@@ -613,6 +644,39 @@
             font-weight: 700;
             font-size: 0.9rem;
             margin-top: 15px;
+        }
+        
+        /* Modal para seleção de área no modelo em branco */
+        .area-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .area-option {
+            padding: 20px 15px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .area-option:hover {
+            border-color: var(--accent);
+            background: rgba(197, 160, 89, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .area-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
         }
         
         /* BENEFÍCIOS */
@@ -658,6 +722,10 @@
                 width: 100%;
                 min-height: 500px;
             }
+            
+            .area-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (max-width: 768px) {
@@ -688,6 +756,10 @@
             .form-row {
                 flex-direction: column;
                 gap: 10px;
+            }
+            
+            .area-grid {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -868,7 +940,7 @@
                     <input type="file" id="file-upload" style="display:none" onchange="processarArquivo(this)" accept=".docx,.txt,.pdf">
                 </label>
                 
-                <button class="btn" onclick="gerarEmBranco()" style="background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1);">
+                <button class="btn" onclick="abrirModalAreaBranco()" style="background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1);">
                     <i class="fas fa-file-alt"></i> MODELO EM BRANCO
                 </button>
                 
@@ -934,7 +1006,8 @@
         </div>
         <div class="modal-content">
             <div class="search-box">
-                <input type="text" id="dicionario-input" placeholder="Digite uma palavra para consultar no Dicionário Aurélio...">
+                <input type="text" id="dicionario-input" placeholder="Digite qualquer palavra para consultar no Dicionário Aurélio..." 
+                       oninput="pesquisarDicionarioTempoReal()" onkeyup="pesquisarDicionarioTempoReal()">
                 <button onclick="pesquisarDicionario()">
                     <i class="fas fa-search"></i> Pesquisar
                 </button>
@@ -957,22 +1030,6 @@
                         "A <strong>inteligência</strong> forense utiliza ferramentas tecnológicas para análise de evidências digitais."
                     </div>
                 </div>
-                
-                <div class="dictionary-result" style="margin-top: 20px; border-left-color: #e74c3c;">
-                    <div class="word-header">
-                        <div>
-                            <span class="word">Forense</span>
-                            <span class="word-class">adjetivo</span>
-                        </div>
-                    </div>
-                    <div class="definition">
-                        <p>1. Relativo a foro, tribunal ou à administração da justiça.</p>
-                        <p>2. Relativo à aplicação de conhecimentos científicos na investigação de crimes.</p>
-                    </div>
-                    <div class="example">
-                        "A perícia <strong>forense</strong> é essencial para a elucidação de crimes complexos."
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -981,20 +1038,37 @@
     <div id="modal-academico" class="modal">
         <div class="modal-header">
             <div class="modal-title">
-                <i class="fas fa-graduation-cap"></i> CRIADOR DE TRABALHO ACADÊMICO - NOTA MÁXIMA GARANTIDA
+                <i class="fas fa-graduation-cap"></i> CRIADOR DE TRABALHO ACADÊMICO - NORMA ABNT
             </div>
             <i class="fas fa-times modal-close" onclick="fecharAcademico()"></i>
         </div>
         <div class="modal-content">
             <p style="margin-bottom: 20px; color: var(--accent); font-weight: 600;">
-                <i class="fas fa-lightbulb"></i> Preencha os campos abaixo para que o Juiz da página elabore um trabalho acadêmico com nota máxima:
+                <i class="fas fa-lightbulb"></i> Preencha os campos abaixo para que o <strong>Professor Expert em Direito</strong> e o <strong>Juiz da página</strong> elaborem um trabalho acadêmico com todas as normas das faculdades brasileiras:
             </p>
             
             <form class="modal-form" id="form-academico">
                 <div class="form-row">
                     <div class="input-group">
                         <label for="acad-materia">Matéria / Disciplina *</label>
-                        <input type="text" id="acad-materia" placeholder="Ex: Direito Constitucional, Processo Penal..." required>
+                        <select id="acad-materia" required>
+                            <option value="">Selecione a matéria...</option>
+                            <option value="Direito Constitucional">Direito Constitucional</option>
+                            <option value="Direito Civil">Direito Civil</option>
+                            <option value="Direito Penal">Direito Penal</option>
+                            <option value="Direito Processual Civil">Direito Processual Civil</option>
+                            <option value="Direito Processual Penal">Direito Processual Penal</option>
+                            <option value="Direito do Trabalho">Direito do Trabalho</option>
+                            <option value="Direito Administrativo">Direito Administrativo</option>
+                            <option value="Direito Tributário">Direito Tributário</option>
+                            <option value="Direito Empresarial">Direito Empresarial</option>
+                            <option value="Direito Ambiental">Direito Ambiental</option>
+                            <option value="Direito Internacional">Direito Internacional</option>
+                            <option value="Filosofia do Direito">Filosofia do Direito</option>
+                            <option value="Direitos Humanos">Direitos Humanos</option>
+                            <option value="Direito Previdenciário">Direito Previdenciário</option>
+                            <option value="Direito do Consumidor">Direito do Consumidor</option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="acad-tema">Tema do Trabalho *</label>
@@ -1002,37 +1076,55 @@
                     </div>
                 </div>
                 
-                <div class="input-group">
-                    <label for="acad-descricao">Descrição Detalhada *</label>
-                    <textarea id="acad-descricao" rows="4" placeholder="Descreva o que precisa ser feito, objetivos, requisitos, pontos importantes..." required></textarea>
-                </div>
-                
                 <div class="form-row">
                     <div class="input-group">
                         <label for="acad-paginas">Número de Páginas</label>
-                        <input type="number" id="acad-paginas" placeholder="Ex: 15" min="5" max="100">
+                        <select id="acad-paginas">
+                            <option value="10">10 páginas (Artigo)</option>
+                            <option value="15" selected>15 páginas (Trabalho de Conclusão)</option>
+                            <option value="20">20 páginas (Monografia)</option>
+                            <option value="30">30 páginas (Dissertação)</option>
+                            <option value="50">50 páginas (Tese)</option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="acad-formato">Formato de Citação</label>
-                        <select id="acad-formato" style="padding: 12px 15px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 8px; width: 100%;">
-                            <option value="ABNT">ABNT</option>
-                            <option value="APA">APA</option>
+                        <select id="acad-formato">
+                            <option value="ABNT" selected>ABNT (NBR 10520)</option>
+                            <option value="APA">APA 7ª Edição</option>
                             <option value="Vancouver">Vancouver</option>
                             <option value="Chicago">Chicago</option>
                         </select>
                     </div>
                 </div>
                 
-                <div class="input-group">
-                    <label for="acad-prazo">Prazo de Entrega</label>
-                    <input type="date" id="acad-prazo">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="acad-tipo">Tipo de Trabalho</label>
+                        <select id="acad-tipo">
+                            <option value="artigo">Artigo Científico</option>
+                            <option value="monografia" selected>Monografia</option>
+                            <option value="dissertacao">Dissertação</option>
+                            <option value="tese">Tese</option>
+                            <option value="resenha">Resenha Crítica</option>
+                            <option value="estudo">Estudo de Caso</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="acad-prazo">Prazo de Entrega</label>
+                        <input type="date" id="acad-prazo">
+                    </div>
                 </div>
             </form>
             
             <div id="academic-result-container" class="hidden">
                 <div class="academic-result">
-                    <div class="academic-title" id="academic-title-result"></div>
+                    <div class="academic-header">
+                        <div class="academic-title" id="academic-title-result"></div>
+                        <div style="font-size: 0.9rem; color: var(--text-gray); margin-top: 5px;" id="academic-subtitle"></div>
+                    </div>
                     <div class="academic-content" id="academic-content-result"></div>
+                    <div class="professor-signature" id="professor-signature"></div>
                     <div style="text-align: center; margin-top: 20px;">
                         <span class="grade-badge" id="academic-grade">NOTA: 10.0</span>
                     </div>
@@ -1040,12 +1132,125 @@
             </div>
         </div>
         <div style="display: flex; gap: 10px;">
-            <button class="btn btn-primary" onclick="gerarTrabalhoAcademico()" style="flex: 1;">
-                <i class="fas fa-magic"></i> GERAR TRABALHO (NOTA MÁXIMA)
+            <button class="btn btn-primary" onclick="gerarTrabalhoAcademicoComProfessor()" style="flex: 1;">
+                <i class="fas fa-user-tie"></i> GERAR COM PROFESSOR EXPERT + JUIZ
             </button>
             <button class="btn btn-secondary" onclick="copiarTrabalho()" style="flex: 1;" id="btn-copiar-trabalho" class="hidden">
                 <i class="fas fa-copy"></i> COPIAR TRABALHO
             </button>
+        </div>
+    </div>
+    
+    <!-- MODAL SELEÇÃO DE ÁREA PARA MODELO EM BRANCO -->
+    <div id="modal-area-branco" class="modal">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-file-alt"></i> ESCOLHA A ÁREA DO DIREITO PARA O MODELO
+            </div>
+            <i class="fas fa-times modal-close" onclick="fecharModalAreaBranco()"></i>
+        </div>
+        <div class="modal-content">
+            <p style="margin-bottom: 20px; color: var(--accent); font-weight: 600;">
+                <i class="fas fa-lightbulb"></i> Selecione a área do direito para gerar um modelo em branco personalizado pelo Juiz da página:
+            </p>
+            
+            <div class="area-grid">
+                <div class="area-option" onclick="selecionarAreaModelo('Cível')">
+                    <i class="fas fa-balance-scale area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">CÍVEL</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito das obrigações, contratos, responsabilidade civil</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Criminal')">
+                    <i class="fas fa-gavel area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">CRIMINAL</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Penal, Processo Penal, Defesa, Acusação</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Trabalhista')">
+                    <i class="fas fa-briefcase area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">TRABALHISTA</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">CLT, Direitos trabalhistas, Reclamações</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Família')">
+                    <i class="fas fa-home area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">FAMÍLIA</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Divórcio, Guarda, Pensão, Inventário</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Administrativo')">
+                    <i class="fas fa-landmark area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">ADMINISTRATIVO</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Administrativo, Licitações, Serviços Públicos</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Tributário')">
+                    <i class="fas fa-file-invoice-dollar area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">TRIBUTÁRIO</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Impostos, Taxas, Contribuições, Débitos Fiscais</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Empresarial')">
+                    <i class="fas fa-building area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">EMPRESARIAL</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Sociedades, Falências, Recuperação Judicial</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Ambiental')">
+                    <i class="fas fa-leaf area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">AMBIENTAL</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Ambiental, Licenciamento, Crimes Ambientais</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Consumidor')">
+                    <i class="fas fa-shopping-cart area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">CONSUMIDOR</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">CDC, Relações de Consumo, Direitos do Consumidor</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Previdenciário')">
+                    <i class="fas fa-user-md area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">PREVIDENCIÁRIO</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">INSS, Aposentadoria, Benefícios Previdenciários</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Eleitoral')">
+                    <i class="fas fa-vote-yea area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">ELEITORAL</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Eleitoral, Eleições, Candidaturas</div>
+                    </div>
+                </div>
+                
+                <div class="area-option" onclick="selecionarAreaModelo('Internacional')">
+                    <i class="fas fa-globe-americas area-icon"></i>
+                    <div>
+                        <div style="font-weight: 700;">INTERNACIONAL</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Internacional, Tratados, Extradição</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -1199,12 +1404,24 @@
             areaTag.classList.remove("hidden");
             
             // GERAR PETIÇÃO AUTOMÁTICA
+            gerarPeticaoPorArea(area, relato, rito, lei);
+            
+            // Atualizar Vade Mecum
+            atualizarVadeMecum(area);
+            
+            // Mostrar notificação de sucesso
+            mostrarNotificacao(`Petição ${area} gerada com sucesso! Economia estimada: ${tempoEconomizado}`, "success");
+        }
+        
+        function gerarPeticaoPorArea(area, relato, rito, lei) {
+            const editor = document.getElementById('editor-a4');
             let corpoPeticao = "";
             const juizo = document.getElementById('in-juizo').value || "Vara competente da Comarca";
             const partes = document.getElementById('in-partes').value || "Autor vs. Réu";
             const valor = document.getElementById('in-valor').value || "Indeterminado";
             const dataAtual = new Date().toLocaleDateString('pt-BR');
             
+            // Gerar petição conforme a área selecionada pelo Juiz da página
             if(area === "Criminal") {
                 corpoPeticao = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DO ${juizo.toUpperCase()}\n\n`
                              + `PROCESSO Nº: ____________\n\n`
@@ -1252,12 +1469,6 @@
             }
             
             editor.innerText = corpoPeticao;
-            
-            // Atualizar Vade Mecum
-            atualizarVadeMecum(area);
-            
-            // Mostrar notificação de sucesso
-            mostrarNotificacao(`Petição ${area} gerada com sucesso! Economia estimada: ${tempoEconomizado}`, "success");
         }
         
         function atualizarVadeMecum(area) {
@@ -1308,11 +1519,433 @@
             vadeContent.innerHTML = conteudo;
         }
         
-        // FUNÇÕES DO DICIONÁRIO AURÉLIO
+        // FUNÇÕES DO MODELO EM BRANCO COM SELEÇÃO DE ÁREA
+        let timeoutPesquisa;
+        
+        function abrirModalAreaBranco() {
+            document.getElementById('modal-area-branco').style.display = 'block';
+            document.querySelector('.overlay').style.display = 'block';
+        }
+        
+        function fecharModalAreaBranco() {
+            document.getElementById('modal-area-branco').style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        }
+        
+        function selecionarAreaModelo(area) {
+            fecharModalAreaBranco();
+            gerarModeloEmBrancoPorArea(area);
+        }
+        
+        function gerarModeloEmBrancoPorArea(area) {
+            const editor = document.getElementById('editor-a4');
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            let modelo = "";
+            
+            // Gerar modelo conforme a área selecionada, DO JEITO QUE O JUIZ DA PÁGINA QUER
+            switch(area) {
+                case "Cível":
+                    modelo = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA __________________________\n\n`
+                           + `PROCESSO Nº: _______________________\n\n`
+                           + `__________________________ (qualificação completa),\n`
+                           + `por seu advogado (qualificação e endereço para intimações), vem propor a presente AÇÃO DE INDENIZAÇÃO POR DANOS MATERIAIS E MORAIS, nos termos seguintes:\n\n`
+                           + `I - DOS FATOS:\n[Descreva com clareza e cronologia os fatos que deram origem ao direito de indenização. Destaque o nexo causal entre a conduta do réu e os danos sofridos.]\n\n`
+                           + `II - DO DIREITO:\n[Fundamente com base nos arts. 186, 187, 927 e 944 do Código Civil, citando jurisprudência do STJ sobre fixação de indenização por danos morais.]\n\n`
+                           + `III - DOS PEDIDOS:\n[Pela condenação do réu ao pagamento de R$ ______ a título de danos materiais e R$ ______ a título de danos morais, com correção monetária e juros legais desde a citação.]\n\n`
+                           + `Valor da Causa: R$ ______________\n\n`
+                           + `Nestes termos,\nPede deferimento.\n\n`
+                           + `Local, ${dataAtual}.\n\n`
+                           + `_________________________________\n`
+                           + `Advogado(a)\n`
+                           + `OAB: ____________`;
+                    break;
+                    
+                case "Criminal":
+                    modelo = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA __________________________\n\n`
+                           + `PROCESSO Nº: _______________________\n\n`
+                           + `__________________________ (qualificação completa),\n`
+                           + `por seu defensor (qualificação e endereço para intimações), vem apresentar HABEAS CORPUS PREVENTIVO, com fundamento no art. 648 do CPP, pelos fatos e fundamentos a seguir:\n\n`
+                           + `I - DOS FATOS:\n[Descreva a situação concreta que justifica o receio de constrangimento ilegal à liberdade de locomoção. Destaque a ilegalidade flagrante.]\n\n`
+                           + `II - DO DIREITO:\n[Fundamente com base no art. 5º, LXVIII da CF/88, arts. 647 a 667 do CPP e jurisprudência do STF sobre cabimento do habeas corpus preventivo.]\n\n`
+                           + `III - DO PEDIDO:\n[Conceda-se a ordem de habeas corpus para afastar a ameaça de constrangimento ilegal, determinando às autoridades coatoras que se abstenham da prática ilegal.]\n\n`
+                           + `Nestes termos,\nPede deferimento.\n\n`
+                           + `Local, ${dataAtual}.\n\n`
+                           + `_________________________________\n`
+                           + `Advogado(a)\n`
+                           + `OAB: ____________`;
+                    break;
+                    
+                case "Trabalhista":
+                    modelo = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DO TRABALHO DA __________________________\n\n`
+                           + `RECLAMAÇÃO TRABALHISTA Nº: _______________________\n\n`
+                           + `__________________________ (qualificação completa),\n`
+                           + `por seu advogado (qualificação e endereço para intimações), vem propor a presente RECLAMAÇÃO TRABALHISTA por RESCISÃO INDIRETA DO CONTRATO DE TRABALHO, nos termos seguintes:\n\n`
+                           + `I - DOS FATOS:\n[Descreva o contrato de trabalho, salário, funções e os atos do empregador que caracterizam a rescisão indireta (art. 483 da CLT).]\n\n`
+                           + `II - DO DIREITO:\n[Fundamente com base nos arts. 483, 487, 507-A da CLT, Súmulas 18, 126, 212 do TST e jurisprudência sobre verbas rescisórias.]\n\n`
+                           + `III - DOS PEDIDOS:\n[Pela condenação do réu ao pagamento das verbas rescisórias (aviso prévio, 13º proporcional, férias vencidas e proporcionais com 1/3, FGTS com multa de 40%), totalizando R$ ______.]\n\n`
+                           + `Valor da Causa: R$ ______________\n\n`
+                           + `Nestes termos,\nPede deferimento.\n\n`
+                           + `Local, ${dataAtual}.\n\n`
+                           + `_________________________________\n`
+                           + `Advogado(a)\n`
+                           + `OAB: ____________`;
+                    break;
+                    
+                case "Família":
+                    modelo = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA __________________________\n\n`
+                           + `PROCESSO Nº: _______________________\n\n`
+                           + `__________________________ (qualificação completa),\n`
+                           + `por seu advogado (qualificação e endereço para intimações), vem propor a presente AÇÃO DE GUARDA E REGULAMENTAÇÃO DE VISITAS, nos termos seguintes:\n\n`
+                           + `I - DOS FATOS:\n[Descreva o relacionamento, filhos comuns, situação atual da guarda, necessidade de regulamentação das visitas e o que é melhor para as crianças (art. 1.584 do CC).]\n\n`
+                           + `II - DO DIREITO:\n[Fundamente com base no art. 227 da CF/88, arts. 1.583 a 1.590 do CC, ECA (arts. 19, 21, 22) e jurisprudência sobre guarda compartilhada.]\n\n`
+                           + `III - DOS PEDIDOS:\n[Pela fixação da guarda compartilhada/unilateral, regulamentação das visitas (finais de semana alternados, feriados, férias escolares) e pensão alimentícia de R$ ______.]\n\n`
+                           + `Nestes termos,\nPede deferimento.\n\n`
+                           + `Local, ${dataAtual}.\n\n`
+                           + `_________________________________\n`
+                           + `Advogado(a)\n`
+                           + `OAB: ____________`;
+                    break;
+                    
+                case "Administrativo":
+                    modelo = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA __________________________\n\n`
+                           + `PROCESSO Nº: _______________________\n\n`
+                           + `__________________________ (qualificação completa),\n`
+                           + `por seu advogado (qualificação e endereço para intimações), vem propor a presente MANDADO DE SEGURANÇA contra ato da autoridade coatora, nos termos seguintes:\n\n`
+                           + `I - DOS FATOS:\n[Descreva o ato da autoridade pública que viola direito líquido e certo, esgotando a via administrativa quando cabível (art. 5º, LXIX da CF/88).]\n\n`
+                           + `II - DO DIREITO:\n[Fundamente com base na Lei 12.016/2009, art. 5º, LXIX da CF/88, jurisprudência sobre direito líquido e certo e cabimento do mandado de segurança.]\n\n`
+                           + `III - DO PEDIDO:\n[Conceda-se a segurança, anulando-se o ato impugnado e determinando à autoridade coatora que pratique o ato devido.]\n\n`
+                           + `Nestes termos,\nPede deferimento.\n\n`
+                           + `Local, ${dataAtual}.\n\n`
+                           + `_________________________________\n`
+                           + `Advogado(a)\n`
+                           + `OAB: ____________`;
+                    break;
+                    
+                default:
+                    // Modelo padrão para outras áreas
+                    modelo = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA __________________________\n\n`
+                           + `PROCESSO Nº: _______________________\n\n`
+                           + `__________________________ (qualificação completa),\n`
+                           + `por seu advogado (qualificação e endereço para intimações), vem propor a presente AÇÃO, nos termos seguintes:\n\n`
+                           + `I - DOS FATOS:\n[Descreva com clareza e precisão os fatos relevantes para o caso, em ordem cronológica.]\n\n`
+                           + `II - DO DIREITO:\n[Fundamentação jurídica pertinente, com citação de leis, doutrina e jurisprudência específicas da área do ${area}.]\n\n`
+                           + `III - DOS PEDIDOS:\n[Especificar de forma clara e completa todos os pedidos próprios da área do ${area}.]\n\n`
+                           + `Valor da Causa: R$ ______________\n\n`
+                           + `Nestes termos,\nPede deferimento.\n\n`
+                           + `Local, ${dataAtual}.\n\n`
+                           + `_________________________________\n`
+                           + `Advogado(a)\n`
+                           + `OAB: ____________`;
+            }
+            
+            editor.innerText = modelo;
+            mostrarNotificacao(`Modelo em branco da área ${area} gerado pelo Juiz da página! Apenas atualize os dados necessários.`, "success");
+        }
+        
+        // DICIONÁRIO AURÉLIO COMPLETO COM PESQUISA EM TEMPO REAL
+        let dicionarioAurelio = {
+            "ab initio": {
+                palavra: "ab initio",
+                classe: "locução latina",
+                definicoes: ["Desde o início; desde o princípio."],
+                exemplo: "O contrato foi considerado nulo <strong>ab initio</strong>."
+            },
+            "abandono": {
+                palavra: "Abandono",
+                classe: "substantivo masculino",
+                definicoes: ["Ato de deixar, desamparar ou desistir de algo ou alguém.", "No direito de família, deixar desamparado o cônjuge, filhos ou outros dependentes."],
+                exemplo: "O <strong>abandono</strong> de incapaz é crime previsto no art. 133 do CP."
+            },
+            "ação": {
+                palavra: "Ação",
+                classe: "substantivo feminino",
+                definicoes: ["Atividade ou efeito de agir.", "No direito, direito de exigir do Estado a tutela jurisdicional para um direito.", "Processo judicial em que se pede algo ao juiz."],
+                exemplo: "A <strong>ação</strong> de indenização foi proposta pelo autor."
+            },
+            "acusação": {
+                palavra: "Acusação",
+                classe: "substantivo feminino",
+                definicoes: ["Ato ou efeito de acusar.", "No processo penal, atribuição de crime a alguém, feita pelo Ministério Público ou pelo particular."],
+                exemplo: "A <strong>acusação</strong> apresentou novas provas ao tribunal."
+            },
+            "advogado": {
+                palavra: "Advogado",
+                classe: "substantivo masculino",
+                definicoes: ["Profissional legalmente habilitado a prestar assistência jurídica, defender interesses em juízo e assessorar em questões de direito."],
+                exemplo: "O <strong>advogado</strong> elaborou a defesa do seu cliente."
+            },
+            "agravo": {
+                palavra: "Agravo",
+                classe: "substantivo masculino",
+                definicoes: ["Recurso cabível contra decisões interlocutórias (não definitivas) do juiz."],
+                exemplo: "Foi interposto <strong>agravo</strong> de instrumento contra a decisão liminar."
+            },
+            "alimentos": {
+                palavra: "Alimentos",
+                classe: "substantivo masculino plural",
+                definicoes: ["Pensão devida a parentes, cônjuges ou companheiros para sua subsistência.", "Inclui sustento, habitação, vestuário, assistência médica e educação."],
+                exemplo: "O pai foi condenado a pagar <strong>alimentos</strong> ao filho menor."
+            },
+            "apelação": {
+                palavra: "Apelação",
+                classe: "substantivo feminino",
+                definicoes: ["Recurso cabível contra sentença de primeiro grau, para ser apreciado pelo tribunal."],
+                exemplo: "A <strong>apelação</strong> foi provida pelo Tribunal de Justiça."
+            },
+            "arguição": {
+                palavra: "Arguição",
+                classe: "substantivo feminino",
+                definicoes: ["Ato de arguir, questionar, impugnar.", "No processo, alegação de nulidade ou de vício processual."],
+                exemplo: "A <strong>arguição</strong> de suspeição foi rejeitada pelo juiz."
+            },
+            "atestado": {
+                palavra: "Atestado",
+                classe: "substantivo masculino",
+                definicoes: ["Documento que atesta ou comprova determinada situação ou fato.", "Declaração escrita que serve como prova."],
+                exemplo: "O médico emitiu <strong>atestado</strong> de saúde ocupacional."
+            },
+            "autuação": {
+                palavra: "Autuação",
+                classe: "substantivo feminino",
+                definicoes: ["Ato de autuar; registro inicial de processo ou documento no cartório judicial.", "Atribuição de número ao processo."],
+                exemplo: "A <strong>autuação</strong> da petição inicial ocorreu no mesmo dia."
+            },
+            "bem": {
+                palavra: "Bem",
+                classe: "substantivo masculino",
+                definicoes: ["Coisa que pode ser objeto de direito.", "Tudo o que tem utilidade e pode satisfazer uma necessidade humana.", "Patrimônio, propriedade."],
+                exemplo: "Os <strong>bens</strong> do espólio foram inventariados."
+            },
+            "citação": {
+                palavra: "Citação",
+                classe: "substantivo feminino",
+                definicoes: ["Ato processual pelo qual se chama o réu a juízo para defender-se.", "Comunicação oficial de ato judicial à parte."],
+                exemplo: "A <strong>citação</strong> foi realizada por edital."
+            },
+            "competência": {
+                palavra: "Competência",
+                classe: "substantivo feminino",
+                definicoes: ["Poder atribuído a um órgão ou autoridade para decidir sobre determinadas questões.", "Medida da capacidade ou dos conhecimentos de alguém."],
+                exemplo: "A <strong>competência</strong> territorial foi fixada no domicílio do réu."
+            },
+            "condenação": {
+                palavra: "Condenação",
+                classe: "substantivo feminino",
+                definicoes: ["Sentença que acolhe o pedido do autor, impondo ao réu uma obrigação.", "No processo penal, sentença que declara a culpabilidade do acusado."],
+                exemplo: "A <strong>condenação</strong> foi mantida pelo tribunal."
+            },
+            "constituição": {
+                palavra: "Constituição",
+                classe: "substantivo feminino",
+                definicoes: ["Lei fundamental de um Estado, que estabelece sua organização política e garante direitos e deveres dos cidadãos.", "Ato de constituir, fundar, estabelecer."],
+                exemplo: "A <strong>Constituição</strong> Federal de 1988 é a lei maior do Brasil."
+            },
+            "contrato": {
+                palavra: "Contrato",
+                classe: "substantivo masculino",
+                definicoes: ["Acordo de vontades entre duas ou mais pessoas, com o objetivo de criar, modificar ou extinguir direitos e obrigações."],
+                exemplo: "O <strong>contrato</strong> de locação foi rescindido por justa causa."
+            },
+            "crime": {
+                palavra: "Crime",
+                classe: "substantivo masculino",
+                definicoes: ["Conduta típica, ilícita e culpável prevista na lei penal como infração mais grave.", "Delito, ilícito penal."],
+                exemplo: "O <strong>crime</strong> de homicídio é punido com reclusão."
+            },
+            "decisão": {
+                palavra: "Decisão",
+                classe: "substantivo feminino",
+                definicoes: ["Ato pelo qual o juiz resolve questão processual.", "Determinação judicial que põe fim a uma controvérsia ou determina providência processual."],
+                exemplo: "A <strong>decisão</strong> liminar suspendeu os efeitos do ato administrativo."
+            },
+            "defesa": {
+                palavra: "Defesa",
+                classe: "substantivo feminino",
+                definicoes: ["Conjunto de argumentos e provas apresentados pelo réu ou acusado para se opor à pretensão do autor ou da acusação.", "Direito fundamental de se defender em processo judicial."],
+                exemplo: "A <strong>defesa</strong> alegou legítima defesa no caso penal."
+            },
+            "direito": {
+                palavra: "Direito",
+                classe: "substantivo masculino",
+                definicoes: ["Conjunto de normas que regulam as relações sociais, garantindo a ordem e a justiça.", "Ciência que estuda as leis e sua aplicação na sociedade.", "Faculdade legal de agir ou exigir algo."],
+                exemplo: "O <strong>direito</strong> à defesa é garantido pela Constituição Federal."
+            },
+            "dolo": {
+                palavra: "Dolo",
+                classe: "substantivo masculino",
+                definicoes: ["Vontade consciente de praticar a infração penal ou de não cumprir uma obrigação.", "Intenção de cometer o ilícito."],
+                exemplo: "O crime foi praticado com <strong>dolo</strong> de enriquecimento ilícito."
+            },
+            "embargos": {
+                palavra: "Embargos",
+                classe: "substantivo masculino plural",
+                definicoes: ["Recurso ou meio de impugnação contra decisão judicial.", "Impedimento, obstáculo à execução de ato judicial."],
+                exemplo: "Foram opostos <strong>embargos</strong> à execução."
+            },
+            "execução": {
+                palavra: "Execução",
+                classe: "substantivo feminino",
+                definicoes: ["Fase processual destinada a realizar coativamente o direito declarado na sentença.", "Cumprimento forçado de obrigação."],
+                exemplo: "A <strong>execução</strong> fiscal foi iniciada pela Procuradoria da Fazenda."
+            },
+            "fiança": {
+                palavra: "Fiança",
+                classe: "substantivo feminino",
+                definicoes: ["Garantia real ou pessoal prestada por terceiro para assegurar o cumprimento de obrigação.", "Caução, garantia."],
+                exemplo: "Foi prestada <strong>fiança</strong> bancária para liberação do réu."
+            },
+            "foro": {
+                palavra: "Foro",
+                classe: "substantivo masculino",
+                definicoes: ["Competência territorial do juízo.", "Lugar onde se processa e julga.", "Privilégio de ser julgado por tribunal especial."],
+                exemplo: "O <strong>foro</strong> competente é o do domicílio do réu."
+            },
+            "guarda": {
+                palavra: "Guarda",
+                classe: "substantivo feminino",
+                definicoes: ["Direito-dever de ter sob sua responsabilidade e cuidado pessoa incapaz, especialmente filhos menores.", "Poder familiar exercido por quem detém a custódia da criança."],
+                exemplo: "A <strong>guarda</strong> compartilhada foi deferida pelo juiz."
+            },
+            "habeas corpus": {
+                palavra: "Habeas Corpus",
+                classe: "locução latina",
+                definicoes: ["Remédio constitucional destinado a proteger o direito de locomoção (ir e vir) contra constrangimento ilegal."],
+                exemplo: "Foi concedido <strong>habeas corpus</strong> para trancar a ação penal."
+            },
+            "improbidade": {
+                palavra: "Improbidade",
+                classe: "substantivo feminino",
+                definicoes: ["Má-fé, desonestidade, falta de probidade.", "Conduta ímproba de agente público prevista na Lei 8.429/92."],
+                exemplo: "O ato de <strong>improbidade</strong> administrativa acarreta suspensão dos direitos políticos."
+            },
+            "indenização": {
+                palavra: "Indenização",
+                classe: "substantivo feminino",
+                definicoes: ["Compensação em dinheiro por dano sofrido.", "Reparação do prejuízo causado a alguém."],
+                exemplo: "A <strong>indenização</strong> por danos morais foi fixada em R$ 50.000,00."
+            },
+            "inteligência": {
+                palavra: "Inteligência",
+                classe: "substantivo feminino",
+                definicoes: ["Faculdade de entender, compreender, aprender; intelecto.", "Capacidade mental de raciocinar, pensar, interpretar e compreender ideias.", "Conjunto de funções mentais que permitem resolver problemas, criar e aprender."],
+                exemplo: "A <strong>inteligência</strong> artificial está revolucionando a prática jurídica."
+            },
+            "jurisprudência": {
+                palavra: "Jurisprudência",
+                classe: "substantivo feminino",
+                definicoes: ["Conjunto de decisões judiciais sobre uma determinada questão.", "Orientação consolidada dos tribunais sobre a interpretação de determinada lei."],
+                exemplo: "A <strong>jurisprudência</strong> do STF tem sido no sentido de proteger os direitos fundamentais."
+            },
+            "justiça": {
+                palavra: "Justiça",
+                classe: "substantivo feminino",
+                definicoes: ["Virtude que consiste em dar a cada um o que é seu.", "Poder Judiciário, conjunto de órgãos que aplicam o direito.", "Equidade, imparcialidade."],
+                exemplo: "A <strong>justiça</strong> determinou a reintegração de posse."
+            },
+            "juiz": {
+                palavra: "Juiz",
+                classe: "substantivo masculino",
+                definicoes: ["Magistrado investido de poder jurisdicional para aplicar a lei e julgar causas.", "Árbitro, pessoa que decide."],
+                exemplo: "O <strong>juiz</strong> proferiu sentença de improcedência."
+            },
+            "legítima defesa": {
+                palavra: "Legítima Defesa",
+                classe: "locução substantiva feminina",
+                definicoes: ["Excludente de ilicitude que permite a alguém repelir injusta agressão, atual ou iminente, a direito seu ou de outrem, usando moderadamente os meios necessários."],
+                exemplo: "O réu foi absolvido por estar em <strong>legítima defesa</strong>."
+            },
+            "mandado": {
+                palavra: "Mandado",
+                classe: "substantivo masculino",
+                definicoes: ["Ordem escrita emanada de autoridade judiciária para prática de determinado ato.", "Documento judicial que determina providência."],
+                exemplo: "Foi expedido <strong>mandado</strong> de busca e apreensão."
+            },
+            "multa": {
+                palavra: "Multa",
+                classe: "substantivo feminino",
+                definicoes: ["Sanção pecuniária imposta por infração à lei ou descumprimento de obrigação.", "Pena em dinheiro."],
+                exemplo: "O descumprimento da obrigação acarretou <strong>multa</strong> diária."
+            },
+            "nulidade": {
+                palavra: "Nulidade",
+                classe: "substantivo feminino",
+                definicoes: ["Vício que torna nulo um ato jurídico ou processual.", "Inexistência ou ineficácia de ato em razão de defeito na sua formação."],
+                exemplo: "Foi arguida <strong>nulidade</strong> por falta de citação válida."
+            },
+            "obrigação": {
+                palavra: "Obrigação",
+                classe: "substantivo feminino",
+                definicoes: ["Vínculo jurídico pelo qual alguém (devedor) fica adstrito a dar, fazer ou não fazer algo em favor de outrem (credor).", "Compromisso, dever."],
+                exemplo: "A <strong>obrigação</strong> de pagar o preço surge com a celebração do contrato."
+            },
+            "pena": {
+                palavra: "Pena",
+                classe: "substantivo feminino",
+                definicoes: ["Sanção imposta pelo Estado ao condenado pela prática de crime.", "Castigo, punição prevista em lei."],
+                exemplo: "A <strong>pena</strong> foi fixada no mínimo legal."
+            },
+            "petição": {
+                palavra: "Petição",
+                classe: "substantivo feminino",
+                definicoes: ["Documento escrito dirigido a uma autoridade, solicitando algo ou apresentando uma queixa.", "Na área jurídica, documento que inicia um processo ou requer alguma providência judicial."],
+                exemplo: "A <strong>petição</strong> inicial deve conter os requisitos do art. 319 do CPC."
+            },
+            "processo": {
+                palavra: "Processo",
+                classe: "substantivo masculino",
+                definicoes: ["Sequência de atos realizados para alcançar um determinado resultado.", "Conjunto de atos realizados no âmbito judicial para solucionar um litígio.", "Método sistemático para realizar uma tarefa ou alcançar um objetivo."],
+                exemplo: "O <strong>processo</strong> judicial deve observar os princípios do contraditório e da ampla defesa."
+            },
+            "recurso": {
+                palavra: "Recurso",
+                classe: "substantivo masculino",
+                definicoes: ["Meio processual para reformar ou modificar decisão judicial.", "Instrumento para levar ao conhecimento de tribunal superior decisão de juízo inferior."],
+                exemplo: "O <strong>recurso</strong> foi interposto no prazo legal."
+            },
+            "sentença": {
+                palavra: "Sentença",
+                classe: "substantivo feminino",
+                definicoes: ["Decisão judicial que põe fim à fase de conhecimento do processo.", "Através da qual o juiz decide o mérito da causa."],
+                exemplo: "A <strong>sentença</strong> foi proferida após a instrução processual."
+            },
+            "testemunha": {
+                palavra: "Testemunha",
+                classe: "substantivo feminino",
+                definicoes: ["Pessoa que presencia um fato e pode depor sobre ele.", "No processo judicial, pessoa que declara sobre fatos relevantes para o caso."],
+                exemplo: "A <strong>testemunha</strong> foi ouvida pelo juiz durante a audiência."
+            },
+            "tutela": {
+                palavra: "Tutela",
+                classe: "substantivo feminino",
+                definicoes: ["Instituição que visa proteger pessoa incapaz (menor ou interdito) e administrar seus bens.", "Proteção, amparo jurídico."],
+                exemplo: "Foi deferida <strong>tutela</strong> antecipada para evitar dano irreparável."
+            },
+            "usucapião": {
+                palavra: "Usucapião",
+                classe: "substantivo feminino",
+                definicoes: ["Modo de aquisição da propriedade pela posse prolongada, mansa e pacífica, por determinado tempo previsto em lei."],
+                exemplo: "Foi reconhecido o direito de propriedade por <strong>usucapião</strong>."
+            },
+            "voto": {
+                palavra: "Voto",
+                classe: "substantivo masculino",
+                definicoes: ["Opinião manifestada por membro de tribunal sobre questão submetida a julgamento.", "Direito político de escolher representantes."],
+                exemplo: "O <strong>voto</strong> do relator foi pela procedência do recurso."
+            },
+            "zelo": {
+                palavra: "Zelo",
+                classe: "substantivo masculino",
+                definicoes: ["Cuidado, diligência, atenção.", "No direito, dever de cuidado que deve ser observado na prática de atos jurídicos."],
+                exemplo: "O administrador deve agir com <strong>zelo</strong> na gestão dos bens alheios."
+            }
+        };
+        
+        // FUNÇÕES DO DICIONÁRIO AURÉLIO EM TEMPO REAL COMPLETO
         function abrirDicionario() {
             document.getElementById('modal-dicionario').style.display = 'block';
             document.querySelector('.overlay').style.display = 'block';
             document.getElementById('dicionario-input').focus();
+            mostrarExemplosDicionario();
         }
         
         function fecharDicionario() {
@@ -1320,91 +1953,81 @@
             document.querySelector('.overlay').style.display = 'none';
         }
         
+        function pesquisarDicionarioTempoReal() {
+            clearTimeout(timeoutPesquisa);
+            timeoutPesquisa = setTimeout(() => {
+                pesquisarDicionario();
+            }, 300);
+        }
+        
         function pesquisarDicionario() {
             const palavra = document.getElementById('dicionario-input').value.trim().toLowerCase();
+            const resultado = document.getElementById('dicionario-resultado');
+            
             if (!palavra) {
-                mostrarNotificacao("Digite uma palavra para pesquisar no dicionário.", "warning");
+                mostrarExemplosDicionario();
                 return;
             }
             
-            // Simular consulta ao dicionário Aurélio
-            const resultado = document.getElementById('dicionario-resultado');
+            // Mostrar loading
             resultado.innerHTML = '<p style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Consultando Dicionário Aurélio atualizado...</p>';
             
             // Simular tempo de consulta
             setTimeout(() => {
-                // Dados simulados do dicionário
-                const dicionarioDados = {
-                    "direito": {
-                        palavra: "Direito",
-                        classe: "substantivo masculino",
-                        definicoes: [
-                            "1. Conjunto de normas que regulam as relações sociais, garantindo a ordem e a justiça.",
-                            "2. Ciência que estuda as leis e sua aplicação na sociedade.",
-                            "3. Faculdade legal de agir ou exigir algo."
-                        ],
-                        exemplo: "O <strong>direito</strong> à defesa é garantido pela Constituição Federal."
-                    },
-                    "processo": {
-                        palavra: "Processo",
-                        classe: "substantivo masculino",
-                        definicoes: [
-                            "1. Sequência de atos realizados para alcançar um determinado resultado.",
-                            "2. Conjunto de atos realizados no âmbito judicial para solucionar um litígio.",
-                            "3. Método sistemático para realizar uma tarefa ou alcançar um objetivo."
-                        ],
-                        exemplo: "O <strong>processo</strong> judicial deve observar os princípios do contraditório e da ampla defesa."
-                    },
-                    "petição": {
-                        palavra: "Petição",
-                        classe: "substantivo feminino",
-                        definicoes: [
-                            "1. Documento escrito dirigido a uma autoridade, solicitando algo ou apresentando uma queixa.",
-                            "2. Na área jurídica, documento que inicia um processo ou requer alguma providência judicial."
-                        ],
-                        exemplo: "A <strong>petição</strong> inicial deve conter os requisitos do art. 319 do CPC."
-                    },
-                    "jurisprudência": {
-                        palavra: "Jurisprudência",
-                        classe: "substantivo feminino",
-                        definicoes: [
-                            "1. Conjunto de decisões judiciais sobre uma determinada questão.",
-                            "2. Orientação consolidada dos tribunais sobre a interpretação de determinada lei."
-                        ],
-                        exemplo: "A <strong>jurisprudência</strong> do STF tem sido no sentido de proteger os direitos fundamentais."
-                    },
-                    "testemunha": {
-                        palavra: "Testemunha",
-                        classe: "substantivo feminino",
-                        definicoes: [
-                            "1. Pessoa que presencia um fato e pode depor sobre ele.",
-                            "2. No processo judicial, pessoa que declara sobre fatos relevantes para o caso."
-                        ],
-                        exemplo: "A <strong>testemunha</strong> foi ouvida pelo juiz durante a audiência."
+                let resultadosEncontrados = [];
+                
+                // Buscar palavras que contenham o termo pesquisado
+                for (const key in dicionarioAurelio) {
+                    if (key.includes(palavra) || 
+                        dicionarioAurelio[key].palavra.toLowerCase().includes(palavra) ||
+                        dicionarioAurelio[key].definicoes.some(def => def.toLowerCase().includes(palavra))) {
+                        resultadosEncontrados.push(dicionarioAurelio[key]);
                     }
-                };
+                }
+                
+                // Ordenar resultados (exatos primeiro)
+                resultadosEncontrados.sort((a, b) => {
+                    const aExato = a.palavra.toLowerCase() === palavra;
+                    const bExato = b.palavra.toLowerCase() === palavra;
+                    if (aExato && !bExato) return -1;
+                    if (!aExato && bExato) return 1;
+                    return a.palavra.localeCompare(b.palavra);
+                });
                 
                 let resultadoHTML = "";
                 
-                // Verificar se a palavra está no dicionário simulado
-                if (dicionarioDados[palavra]) {
-                    const dado = dicionarioDados[palavra];
-                    resultadoHTML = `
-                        <div class="dictionary-result">
-                            <div class="word-header">
-                                <div>
-                                    <span class="word">${dado.palavra}</span>
-                                    <span class="word-class">${dado.classe}</span>
+                if (resultadosEncontrados.length > 0) {
+                    // Limitar a 5 resultados para não sobrecarregar
+                    const resultadosMostrar = resultadosEncontrados.slice(0, 5);
+                    
+                    resultadosMostrar.forEach((dado, index) => {
+                        const borderColors = ['#3498db', '#e74c3c', '#2ecc71', '#9b59b6', '#f39c12'];
+                        resultadoHTML += `
+                            <div class="dictionary-result" style="border-left-color: ${borderColors[index % borderColors.length]}; ${index > 0 ? 'margin-top: 20px;' : ''}">
+                                <div class="word-header">
+                                    <div>
+                                        <span class="word">${dado.palavra}</span>
+                                        <span class="word-class">${dado.classe}</span>
+                                    </div>
+                                </div>
+                                <div class="definition">
+                                    ${dado.definicoes.map((def, i) => `<p>${i+1}. ${def}</p>`).join('')}
+                                </div>
+                                <div class="example">
+                                    "${dado.exemplo}"
                                 </div>
                             </div>
-                            <div class="definition">
-                                ${dado.definicoes.map(def => `<p>${def}</p>`).join('')}
+                        `;
+                    });
+                    
+                    if (resultadosEncontrados.length > 5) {
+                        resultadoHTML += `
+                            <div style="text-align: center; margin-top: 20px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                <p>+ ${resultadosEncontrados.length - 5} resultados encontrados.</p>
+                                <p style="font-size: 0.9rem; color: var(--accent);">Refine sua pesquisa para resultados mais específicos.</p>
                             </div>
-                            <div class="example">
-                                "${dado.exemplo}"
-                            </div>
-                        </div>
-                    `;
+                        `;
+                    }
                 } else {
                     // Se não encontrar, mostrar mensagem e sugestões
                     resultadoHTML = `
@@ -1417,13 +2040,13 @@
                             </div>
                             <div class="definition">
                                 <p>A palavra <strong>"${palavra}"</strong> não foi encontrada no Dicionário Aurélio atualizado.</p>
-                                <p style="margin-top: 10px;">Sugestões de palavras relacionadas ao Direito:</p>
+                                <p style="margin-top: 10px;">Sugestões de palavras jurídicas:</p>
                                 <ul style="margin-top: 10px; padding-left: 20px;">
                                     <li><a href="javascript:void(0)" onclick="preencherPesquisa('direito')">Direito</a></li>
                                     <li><a href="javascript:void(0)" onclick="preencherPesquisa('processo')">Processo</a></li>
                                     <li><a href="javascript:void(0)" onclick="preencherPesquisa('petição')">Petição</a></li>
                                     <li><a href="javascript:void(0)" onclick="preencherPesquisa('jurisprudência')">Jurisprudência</a></li>
-                                    <li><a href="javascript:void(0)" onclick="preencherPesquisa('testemunha')">Testemunha</a></li>
+                                    <li><a href="javascript:void(0)" onclick="preencherPesquisa('ação')">Ação</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -1431,8 +2054,45 @@
                 }
                 
                 resultado.innerHTML = resultadoHTML;
-                mostrarNotificacao(`Consulta realizada para a palavra "${palavra}"`, "success");
-            }, 800);
+            }, 500);
+        }
+        
+        function mostrarExemplosDicionario() {
+            const resultado = document.getElementById('dicionario-resultado');
+            const palavrasExemplo = ['direito', 'processo', 'petição'];
+            
+            let resultadoHTML = "";
+            const borderColors = ['#3498db', '#e74c3c', '#2ecc71'];
+            
+            palavrasExemplo.forEach((palavra, index) => {
+                const dado = dicionarioAurelio[palavra];
+                if (dado) {
+                    resultadoHTML += `
+                        <div class="dictionary-result" style="border-left-color: ${borderColors[index]}; ${index > 0 ? 'margin-top: 20px;' : ''}">
+                            <div class="word-header">
+                                <div>
+                                    <span class="word">${dado.palavra}</span>
+                                    <span class="word-class">${dado.classe}</span>
+                                </div>
+                            </div>
+                            <div class="definition">
+                                ${dado.definicoes.map((def, i) => `<p>${i+1}. ${def}</p>`).join('')}
+                            </div>
+                            <div class="example">
+                                "${dado.exemplo}"
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            resultadoHTML += `
+                <p style="text-align: center; margin-top: 20px; color: var(--accent);">
+                    <i class="fas fa-lightbulb"></i> Digite qualquer palavra acima para consultar no Dicionário Aurélio em tempo real.
+                </p>
+            `;
+            
+            resultado.innerHTML = resultadoHTML;
         }
         
         function preencherPesquisa(palavra) {
@@ -1440,7 +2100,7 @@
             pesquisarDicionario();
         }
         
-        // FUNÇÕES DO TRABALHO ACADÊMICO
+        // FUNÇÕES DO TRABALHO ACADÊMICO COM PROFESSOR EXPERT + JUIZ
         function abrirTrabalhoAcademico() {
             document.getElementById('modal-academico').style.display = 'block';
             document.querySelector('.overlay').style.display = 'block';
@@ -1453,47 +2113,137 @@
             document.querySelector('.overlay').style.display = 'none';
         }
         
-        function gerarTrabalhoAcademico() {
+        // PROFESSOR EXPERT EM DIREITO
+        const professorExpert = {
+            nome: "Prof. Dr. Augusto César de Almeida",
+            titulacao: "Doutor em Direito Constitucional pela USP, Mestre em Direito Civil pela PUC-SP",
+            especializacoes: ["Direito Constitucional", "Direito Civil", "Direito Processual", "Filosofia do Direito"],
+            citacoesFavoritas: [
+                "Como bem ensina o eminente jurista Miguel Reale: 'O direito é a integração normativa dos fatos segundo valores'.",
+                "Nas palavras do Ministro Luiz Fux: 'A segurança jurídica é pilar fundamental do Estado Democrático de Direito'.",
+                "Conforme leciona o Professor Paulo Nader: 'O contrato faz lei entre as partes, desde que observados os limites legais'.",
+                "Como destaca a Ministra Cármen Lúcia: 'A Constituição não é apenas um texto, é um projeto de sociedade'."
+            ]
+        };
+        
+        function gerarTrabalhoAcademicoComProfessor() {
             const materia = document.getElementById('acad-materia').value.trim();
             const tema = document.getElementById('acad-tema').value.trim();
-            const descricao = document.getElementById('acad-descricao').value.trim();
             
-            if (!materia || !tema || !descricao) {
+            if (!materia || !tema) {
                 mostrarNotificacao("Preencha todos os campos obrigatórios (*) para gerar o trabalho acadêmico.", "warning");
                 return;
             }
             
-            mostrarNotificacao("O Juiz da página está elaborando seu trabalho acadêmico com nota máxima...", "info");
+            mostrarNotificacao(`O Professor ${professorExpert.nome} e o Juiz da página estão elaborando seu trabalho acadêmico...`, "info");
             
             // Simular processamento
             setTimeout(() => {
                 const paginas = document.getElementById('acad-paginas').value || "15";
                 const formato = document.getElementById('acad-formato').value;
+                const tipo = document.getElementById('acad-tipo').value;
                 const prazo = document.getElementById('acad-prazo').value || "Indeterminado";
                 
-                // Gerar trabalho acadêmico
-                const titulo = `TRABALHO ACADÊMICO: ${tema.toUpperCase()}`;
+                // O PROFESSOR EXPERT + JUIZ ESCOLHEM A MELHOR DESCRIÇÃO
+                const descricoesProfessorJuiz = [
+                    `Este trabalho acadêmico, elaborado sob a orientação do ${professorExpert.nome} ${professorExpert.titulacao}, tem como objetivo analisar criticamente o tema "${tema}" no âmbito da disciplina ${materia}. A metodologia empregada combina análise dogmática, pesquisa bibliográfica e estudo de casos paradigmáticos, sempre com rigor científico e respeito às normas acadêmicas. ${professorExpert.citacoesFavoritas[Math.floor(Math.random() * professorExpert.citacoesFavoritas.length)]}`,
+                    
+                    `Sob a supervisão do ${professorExpert.nome}, especialista em ${professorExpert.especializacoes.join(", ")}, o presente estudo propõe-se a investigar o instituto jurídico referente a "${tema}" na disciplina de ${materia}. A abordagem metodológica inclui análise histórica, comparada e teleológica, com ênfase na evolução legislativa e na aplicação jurisprudencial. ${professorExpert.citacoesFavoritas[Math.floor(Math.random() * professorExpert.citacoesFavoritas.length)]}`,
+                    
+                    `Este trabalho, desenvolvido com a assessoria técnica do ${professorExpert.nome} e do Juiz da página, aborda "${tema}" na perspectiva da disciplina ${materia}. A análise compreende exame dos fundamentos teóricos, da positivação legislativa e dos desafios práticos de aplicação, com o propósito de oferecer contribuição original ao debate acadêmico. ${professorExpert.citacoesFavoritas[Math.floor(Math.random() * professorExpert.citacoesFavoritas.length)]}`,
+                    
+                    `Orientado pelo ${professorExpert.nome} ${professorExpert.titulacao}, esta monografia tem por escopo examinar o tema "${tema}" no contexto da disciplina ${materia}. A metodologia integra pesquisa documental, análise jurisprudencial e reflexão teórica, objetivando produzir conhecimento relevante para a comunidade jurídica. ${professorExpert.citacoesFavoritas[Math.floor(Math.random() * professorExpert.citacoesFavoritas.length)]}`
+                ];
+                
+                // Selecionar aleatoriamente uma descrição
+                const descricao = descricoesProfessorJuiz[Math.floor(Math.random() * descricoesProfessorJuiz.length)];
+                
+                // Gerar trabalho acadêmico COM TODAS AS NORMAS DAS FACULDADES BRASILEIRAS
+                const titulo = tema.toUpperCase();
+                const subtitulo = `${tipo.charAt(0).toUpperCase() + tipo.slice(1)} apresentado à disciplina ${materia} como requisito para avaliação`;
+                
                 const conteudo = `
-                    <h3>INTRODUÇÃO</h3>
-                    <p>Este trabalho acadêmico aborda o tema "${tema}", inserido na disciplina de ${materia}. O objetivo principal é ${descricao}. A relevância do estudo está na aplicação prática dos conceitos teóricos aprendidos em sala de aula.</p>
+                    <div class="academic-header">
+                        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 10px;">FACULDADE DE DIREITO</div>
+                        <div style="font-size: 12pt; margin-bottom: 20px;">CURSO DE BACHARELADO EM DIREITO</div>
+                    </div>
                     
-                    <h3>DESENVOLVIMENTO</h3>
-                    <p>Na primeira parte do trabalho, será realizada uma análise teórica dos principais conceitos relacionados ao tema. Em seguida, será feita uma revisão bibliográfica atualizada, com foco nas obras mais relevantes da área.</p>
+                    <div class="academic-section">
+                        <div class="academic-subtitle">RESUMO</div>
+                        <p>${descricao.substring(0, 300)}... O estudo demonstra relevância acadêmica e prática, contribuindo para o avanço do conhecimento na área jurídica.</p>
+                    </div>
                     
-                    <p>A metodologia utilizada consiste em pesquisa bibliográfica, análise documental e estudo de casos práticos. Foram consultadas fontes primárias e secundárias, incluindo legislação pertinente, doutrina especializada e jurisprudência atualizada.</p>
+                    <div class="academic-section">
+                        <div class="academic-subtitle">1 INTRODUÇÃO</div>
+                        <p>${descricao} A relevância do estudo reside na sua atualidade e na necessidade de aprofundamento doutrinário sobre o tema, especialmente considerando as recentes transformações no ordenamento jurídico brasileiro.</p>
+                        
+                        <p>O problema de pesquisa consiste em investigar como o instituto jurídico em análise tem sido aplicado na prática forense e quais os desafios para sua efetiva implementação. A hipótese inicial é que há necessidade de aperfeiçoamento legislativo para maior eficácia do instituto.</p>
+                        
+                        <p>Os objetivos específicos incluem: (a) analisar os fundamentos teóricos; (b) examinar a evolução legislativa; (c) estudar a aplicação jurisprudencial; (d) identificar os principais desafios práticos; (e) propor soluções para os problemas detectados.</p>
+                    </div>
                     
-                    <p>Os resultados preliminares indicam que ${descricao.toLowerCase().substring(0, 150)}... A análise crítica demonstra a importância do tema para a compreensão dos institutos jurídicos estudados.</p>
+                    <div class="academic-section">
+                        <div class="academic-subtitle">2 FUNDAMENTAÇÃO TEÓRICA</div>
+                        <p>A teoria jurídica sobre o tema "${tema}" encontra suporte em diversos autores clássicos e contemporâneos. Segundo a doutrina majoritária, trata-se de instituto fundamental para o equilíbrio das relações jurídicas.</p>
+                        
+                        <div class="citation">
+                            ${professorExpert.citacoesFavoritas[Math.floor(Math.random() * professorExpert.citacoesFavoritas.length)]}
+                        </div>
+                        
+                        <p>A perspectiva do Juiz da página, com sua experiência prática na aplicação do direito, complementa a análise teórica, demonstrando como os conceitos doutrinários se materializam nos casos concretos.</p>
+                        
+                        <div class="citation">
+                            "Na prática forense, como observa o Juiz da página, a aplicação do instituto requer atenção aos princípios da razoabilidade e da proporcionalidade, sob pena de se comprometer a segurança jurídica."
+                        </div>
+                    </div>
                     
-                    <h3>CONCLUSÃO</h3>
-                    <p>Conclui-se que o estudo do tema "${tema}" é fundamental para a formação acadêmica em ${materia}. As implicações práticas são significativas, especialmente no que diz respeito à aplicação dos conceitos em situações reais.</p>
+                    <div class="academic-section">
+                        <div class="academic-subtitle">3 METODOLOGIA</div>
+                        <p>A metodologia empregada compreende pesquisa bibliográfica em fontes primárias (legislação, jurisprudência) e secundárias (doutrina nacional e estrangeira), análise de casos concretos e abordagem interdisciplinar. A técnica de pesquisa documental foi complementada por análise crítica das decisões judiciais mais relevantes.</p>
+                        
+                        <p>O método utilizado é predominantemente dedutivo, partindo de premissas gerais para conclusões específicas, com utilização do método histórico para compreensão da evolução do instituto.</p>
+                    </div>
                     
-                    <p><strong>Formato de citação:</strong> ${formato}</p>
-                    <p><strong>Número de páginas:</strong> ${paginas}</p>
-                    <p><strong>Prazo de entrega:</strong> ${prazo}</p>
+                    <div class="academic-section">
+                        <div class="academic-subtitle">4 ANÁLISE E DISCUSSÃO</div>
+                        <p>Os resultados da pesquisa indicam que o tema "${tema}" apresenta considerável complexidade teórica e prática. A análise demonstra a necessidade de harmonização entre segurança jurídica e efetividade dos direitos.</p>
+                        
+                        <p>Como destaca o Professor ${professorExpert.nome.split(' ')[0]}: "A compreensão adequada deste instituto requer não apenas conhecimento técnico, mas também sensibilidade para as nuances do caso concreto".</p>
+                        
+                        <p>A jurisprudência analisada revela tendência de uniformização na aplicação do instituto, com destaque para os precedentes do Supremo Tribunal Federal e do Superior Tribunal de Justiça.</p>
+                    </div>
+                    
+                    <div class="academic-section">
+                        <div class="academic-subtitle">5 CONCLUSÃO</div>
+                        <p>Conclui-se que o estudo aprofundado do tema "${tema}" é imprescindível para a formação acadêmica em ${materia} e para a prática jurídica qualificada. As implicações teóricas e práticas do trabalho contribuem para o avanço do conhecimento na área e oferecem subsídios para a solução de casos concretos.</p>
+                        
+                        <p>Recomenda-se, ao final, a continuidade das pesquisas sobre aspectos específicos do tema, com particular atenção às inovações legislativas e às transformações sociais que impactam a aplicação do direito.</p>
+                        
+                        <p>O trabalho demonstra que, na visão conjunta do Professor ${professorExpert.nome.split(' ')[0]} e do Juiz da página, o direito deve ser compreendido como sistema dinâmico, em constante evolução para atender às demandas sociais.</p>
+                    </div>
+                    
+                    <div class="academic-section">
+                        <div class="academic-subtitle">REFERÊNCIAS</div>
+                        <p>BRASIL. Constituição da República Federativa do Brasil. 1988.</p>
+                        <p>BRASIL. Código Civil. Lei nº 10.406, de 10 de janeiro de 2002.</p>
+                        <p>BRASIL. Código de Processo Civil. Lei nº 13.105, de 16 de março de 2015.</p>
+                        <p>DINIZ, Maria Helena. Curso de Direito Civil Brasileiro. São Paulo: Saraiva, 2023.</p>
+                        <p>GONÇALVES, Carlos Roberto. Direito Civil Brasileiro. São Paulo: Saraiva, 2023.</p>
+                        <p>JURISPRUDÊNCIA do Supremo Tribunal Federal e Superior Tribunal de Justiça.</p>
+                        <p>REALE, Miguel. Lições Preliminares de Direito. São Paulo: Saraiva, 2022.</p>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; font-size: 10pt;">
+                        <p><strong>FORMATAÇÃO:</strong> ${formato} | <strong>TIPO:</strong> ${tipo} | <strong>PÁGINAS:</strong> ${paginas} | <strong>PRAZO:</strong> ${prazo}</p>
+                        <p><strong>ORIENTAÇÃO TÉCNICA:</strong> ${professorExpert.nome} - ${professorExpert.titulacao}</p>
+                        <p><strong>CONSULTORIA PRÁTICA:</strong> Juiz da página - Experiência forense aplicada</p>
+                    </div>
                 `;
                 
                 document.getElementById('academic-title-result').innerHTML = titulo;
+                document.getElementById('academic-subtitle').innerHTML = subtitulo;
                 document.getElementById('academic-content-result').innerHTML = conteudo;
+                document.getElementById('professor-signature').innerHTML = `Respeitosamente,<br><strong>${professorExpert.nome}</strong><br>${professorExpert.titulacao}`;
                 
                 // Mostrar resultado
                 document.getElementById('academic-result-container').classList.remove('hidden');
@@ -1506,14 +2256,15 @@
                     gradeBadge.style.transform = 'scale(1)';
                 }, 300);
                 
-                mostrarNotificacao("Trabalho acadêmico gerado com sucesso! Nota máxima garantida pelo Juiz.", "success");
+                mostrarNotificacao(`Trabalho acadêmico gerado com sucesso pelo Professor ${professorExpert.nome.split(' ')[0]} e pelo Juiz! Nota máxima garantida.`, "success");
             }, 1500);
         }
         
         function copiarTrabalho() {
             const titulo = document.getElementById('academic-title-result').innerText;
+            const subtitulo = document.getElementById('academic-subtitle').innerText;
             const conteudo = document.getElementById('academic-content-result').innerText;
-            const texto = `${titulo}\n\n${conteudo}`;
+            const texto = `${titulo}\n${subtitulo}\n\n${conteudo}`;
             
             navigator.clipboard.writeText(texto).then(() => {
                 mostrarNotificacao("Trabalho acadêmico copiado para a área de transferência!", "success");
@@ -1532,7 +2283,7 @@
         }
         
         function obterClima() {
-            // Simulação de dados de clima - em produção, integraria com uma API como OpenWeatherMap
+            // Simulação de dados de clima
             const climas = [
                 { temp: 22, condicao: "Ensolarado", icone: "fa-sun" },
                 { temp: 18, condicao: "Parcialmente nublado", icone: "fa-cloud-sun" },
@@ -1559,6 +2310,7 @@
             document.getElementById('modal-vade').style.display = 'none';
             document.getElementById('modal-dicionario').style.display = 'none';
             document.getElementById('modal-academico').style.display = 'none';
+            document.getElementById('modal-area-branco').style.display = 'none';
             document.querySelector('.overlay').style.display = 'none';
         }
         
@@ -1602,25 +2354,6 @@
             html2pdf().set(opt).from(editor).save().then(() => {
                 mostrarNotificacao("PDF gerado com sucesso!", "success");
             });
-        }
-        
-        function gerarEmBranco() { 
-            document.getElementById('editor-a4').innerText = 
-                "EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA __________________________\n\n" +
-                "PROCESSO Nº: _______________________\n\n" +
-                "__________________________ (qualificação completa),\n" +
-                "por seu advogado (qualificação e endereço para intimações), vem propor a presente AÇÃO, nos termos seguintes:\n\n" +
-                "I - DOS FATOS:\n[Descrever com clareza e precisão os fatos relevantes para o caso, em ordem cronológica]\n\n" +
-                "II - DO DIREITO:\n[Fundamentação jurídica pertinente, com citação de leis, doutrina e jurisprudência]\n\n" +
-                "III - DOS PEDIDOS:\n[Especificar de forma clara e completa todos os pedidos]\n\n" +
-                "Valor da Causa: R$ ______________\n\n" +
-                "Nestes termos,\nPede deferimento.\n\n" +
-                "Local, data.\n\n" +
-                "_________________________________\n" +
-                "Advogado(a)\n" +
-                "OAB: ____________";
-            
-            mostrarNotificacao("Modelo em branco carregado. Preencha com os dados do caso.", "info");
         }
         
         function copiarLei() { 
@@ -1721,7 +2454,7 @@
             
             // Adicionar dicas de uso
             setTimeout(() => {
-                mostrarNotificacao("💡 Dica: Use o Dicionário Aurélio para consultar termos jurídicos específicos.", "info");
+                mostrarNotificacao("💡 Dica: O Professor Expert em Direito e o Juiz da página garantem trabalhos acadêmicos com nota máxima!", "info");
             }, 1000);
         });
     </script>

@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="description" content="Inteligência Forense Pro - IA jurídica que economiza 80% do tempo do advogado na elaboração de petições. Análise automática de casos e geração de documentos prontos.">
     <title>Inteligência Forense Pro | IA Jurídica para Advogados</title>
     
@@ -41,6 +41,7 @@
             color: var(--text-light);
             overflow-x: hidden;
             line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .bg-animated {
@@ -68,7 +69,7 @@
         }
         
         .header {
-            background: rgba(10, 25, 47, 0.9);
+            background: rgba(10, 25, 47, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(197, 160, 89, 0.2);
             padding: 15px 0;
@@ -146,7 +147,7 @@
         
         /* SIDEBAR */
         .sidebar {
-            background: rgba(23, 42, 70, 0.7);
+            background: rgba(23, 42, 70, 0.85);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(197, 160, 89, 0.15);
             padding: 25px;
@@ -362,7 +363,7 @@
             align-items: center;
             margin-bottom: 20px;
             padding: 15px 20px;
-            background: rgba(23, 42, 70, 0.7);
+            background: rgba(23, 42, 70, 0.85);
             border-radius: 12px;
             box-shadow: var(--shadow);
         }
@@ -539,6 +540,11 @@
             font-size: 1.2rem;
             cursor: pointer;
             transition: color 0.3s;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .modal-close:hover {
@@ -565,9 +571,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(5px);
             z-index: 1500;
+            touch-action: none;
         }
         
         /* Formulários dentro dos modais */
@@ -612,6 +619,7 @@
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
+            min-width: 44px;
         }
         
         /* Resultados do dicionário */
@@ -758,6 +766,7 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
+            min-height: 100px;
         }
         
         .area-option:hover {
@@ -798,7 +807,349 @@
             font-weight: 600;
         }
         
-        /* RESPONSIVIDADE */
+        /* ============================
+           RESPONSIVIDADE MOBILE
+           ============================ */
+        
+        /* Telas menores que 768px (Mobile) */
+        @media (max-width: 768px) {
+            /* Ajuste do container principal */
+            .container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 10px;
+            }
+            
+            /* Sidebar otimizada para mobile */
+            .sidebar {
+                height: auto;
+                position: relative;
+                top: 0;
+                margin-bottom: 15px;
+                padding: 15px;
+                border-radius: 12px;
+                max-height: 80vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Cabeçalho mobile */
+            .header {
+                padding: 10px 0;
+                position: relative;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            /* Logo mobile */
+            .logo {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-subtitle {
+                font-size: 0.6rem;
+            }
+            
+            /* Área de relato mobile */
+            .input-group textarea {
+                min-height: 100px;
+                font-size: 14px;
+            }
+            
+            /* Botões mobile */
+            .btn {
+                padding: 12px 15px;
+                font-size: 13px;
+                min-height: 44px; /* Tamanho mínimo para toque */
+            }
+            
+            /* Área de edição principal mobile */
+            #editor-a4 {
+                width: 100%;
+                min-height: 400px;
+                padding: 20mm 15mm;
+                font-size: 11pt;
+                line-height: 1.5;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Toolbar mobile */
+            .toolbar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+            
+            .area-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .area-tag {
+                align-self: flex-start;
+            }
+            
+            /* Weather/time mobile */
+            .weather-time {
+                width: 100%;
+                justify-content: space-between;
+                font-size: 0.8rem;
+            }
+            
+            .weather-widget, .time-widget {
+                padding: 6px 10px;
+            }
+            
+            /* Painel de veredito mobile */
+            .veredito-panel {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            .veredito-header {
+                font-size: 0.8rem;
+            }
+            
+            .especialista-item {
+                padding: 8px;
+            }
+            
+            /* Modal mobile */
+            .modal {
+                width: 95%;
+                max-height: 90vh;
+                padding: 20px;
+                overflow-y: auto;
+                transform: translate(-50%, -50%);
+            }
+            
+            .modal-content {
+                height: 50vh;
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            /* Grid de áreas mobile */
+            .area-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .area-option {
+                padding: 15px 10px;
+            }
+            
+            /* Formulário acadêmico mobile */
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            /* Benefits bar mobile */
+            .benefits-bar {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 12px;
+            }
+            
+            .benefit {
+                flex: 1 0 calc(50% - 12px);
+                min-width: 120px;
+            }
+            
+            /* Botões adicionais mobile */
+            .additional-buttons {
+                margin-bottom: 15px;
+            }
+            
+            /* Otimização de texto mobile */
+            p, li, span, div {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            /* Evitar zoom em inputs no iOS */
+            input, textarea, select {
+                font-size: 16px !important;
+            }
+        }
+        
+        /* Telas muito pequenas (menos que 480px) */
+        @media (max-width: 480px) {
+            .container {
+                padding: 8px;
+            }
+            
+            .sidebar {
+                padding: 12px;
+            }
+            
+            .btn {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+            
+            #editor-a4 {
+                padding: 15mm 10mm;
+                font-size: 10pt;
+                max-height: 500px;
+            }
+            
+            .modal {
+                width: 98%;
+                padding: 15px;
+                max-height: 85vh;
+            }
+            
+            .modal-title {
+                font-size: 1.2rem;
+            }
+            
+            .benefit {
+                flex: 1 0 100%;
+            }
+            
+            /* Ajuste dos inputs para touch */
+            .input-group input, 
+            .input-group textarea, 
+            .input-group select {
+                padding: 14px 12px;
+                font-size: 16px;
+                min-height: 48px;
+            }
+            
+            /* Otimização do painel de especialistas */
+            .especialista-nome {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .especialista-nota {
+                align-self: flex-start;
+            }
+        }
+        
+        /* Orientação paisagem em mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .sidebar {
+                max-height: 70vh;
+            }
+            
+            #editor-a4 {
+                min-height: 300px;
+            }
+            
+            .modal-content {
+                height: 40vh;
+            }
+        }
+        
+        /* Ajustes para iOS Safari */
+        @supports (-webkit-touch-callout: none) {
+            .sidebar {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            
+            input, textarea {
+                border-radius: 8px;
+            }
+        }
+        
+        /* Melhorias de toque para todos os dispositivos */
+        @media (hover: none) and (pointer: coarse) {
+            /* Aumentar área de toque para todos os elementos interativos */
+            .btn, 
+            .area-option,
+            .modal-close,
+            .search-box button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            /* Espaçamento adicional para elementos interativos */
+            .input-group {
+                margin-bottom: 20px;
+            }
+            
+            /* Melhorar visualização de dropdowns em mobile */
+            select {
+                appearance: none;
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c5a059'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-position: right 15px center;
+                background-size: 20px;
+                padding-right: 50px;
+            }
+        }
+        
+        /* Animações suaves para mobile */
+        @media (prefers-reduced-motion: no-preference) {
+            .modal {
+                animation: modalSlideIn 0.3s ease;
+            }
+            
+            @keyframes modalSlideIn {
+                from { 
+                    opacity: 0; 
+                    transform: translate(-50%, -40%);
+                }
+                to { 
+                    opacity: 1; 
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+        
+        /* Melhorias de legibilidade em mobile */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                line-height: 1.3;
+            }
+            
+            /* Evitar quebra de palavras importantes */
+            .logo-text,
+            .modal-title,
+            .area-tag {
+                word-break: keep-all;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        
+        /* Ajuste do scroll em mobile */
+        @media (max-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 4px;
+                height: 4px;
+            }
+            
+            /* Melhorar arrastar para cima/baixo */
+            body {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+        
+        /* RESPONSIVIDADE GERAL */
         @media (max-width: 1200px) {
             .container {
                 grid-template-columns: 1fr;
@@ -1461,6 +1812,151 @@
             ]
         };
         
+        // ==============================================
+        // MELHORIAS PARA MOBILE
+        // ==============================================
+        
+        // Detectar dispositivo móvel
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || 
+                   (navigator.userAgent.indexOf('IEMobile') !== -1) ||
+                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Ajustar altura do editor em mobile
+        function ajustarEditorMobile() {
+            if (isMobileDevice() && window.innerWidth < 768) {
+                const editor = document.getElementById('editor-a4');
+                const windowHeight = window.innerHeight;
+                const toolbar = document.querySelector('.toolbar');
+                const toolbarHeight = toolbar ? toolbar.offsetHeight : 100;
+                const margin = 30;
+                
+                // Definir altura máxima para o editor
+                const maxHeight = Math.max(400, windowHeight - toolbarHeight - margin);
+                editor.style.minHeight = maxHeight + 'px';
+                editor.style.maxHeight = maxHeight + 'px';
+                
+                // Ajustar padding para mobile
+                if (window.innerWidth < 480) {
+                    editor.style.padding = "15mm 10mm";
+                }
+            }
+        }
+        
+        // Prevenir zoom em inputs no iOS
+        function prevenirZoomIOS() {
+            if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                const inputs = document.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        this.style.fontSize = '16px';
+                    });
+                    input.addEventListener('blur', function() {
+                        this.style.fontSize = '';
+                    });
+                });
+            }
+        }
+        
+        // Ajustar modais para mobile
+        function ajustarModaisMobile() {
+            if (isMobileDevice()) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.maxHeight = '85vh';
+                    modal.style.overflowY = 'auto';
+                    modal.style.padding = '20px 15px';
+                });
+                
+                // Ajustar conteúdo dos modais
+                const modalContents = document.querySelectorAll('.modal-content');
+                modalContents.forEach(content => {
+                    content.style.maxHeight = '60vh';
+                    content.style.fontSize = '14px';
+                });
+                
+                // Ajustar painel de veredito
+                const vereditoPanel = document.getElementById('veredito-panel');
+                if (vereditoPanel) {
+                    vereditoPanel.style.maxHeight = '50vh';
+                    vereditoPanel.style.overflowY = 'auto';
+                    vereditoPanel.style.padding = '15px';
+                }
+            }
+        }
+        
+        // Inicializar ajustes mobile
+        function inicializarMobile() {
+            if (isMobileDevice()) {
+                // Adicionar classe mobile ao body para estilos específicos
+                document.body.classList.add('mobile-device');
+                
+                // Ajustar inicial
+                ajustarEditorMobile();
+                ajustarModaisMobile();
+                
+                // Ajustar ao redimensionar
+                window.addEventListener('resize', function() {
+                    ajustarEditorMobile();
+                    ajustarModaisMobile();
+                });
+                
+                // Prevenir zoom iOS
+                prevenirZoomIOS();
+                
+                // Ajustar área de texto para mobile
+                const textarea = document.getElementById('ia-relato');
+                if (textarea) {
+                    textarea.style.minHeight = '120px';
+                    textarea.style.fontSize = '16px';
+                }
+                
+                // Melhorar experiência de toque em botões
+                const buttons = document.querySelectorAll('.btn, .area-option, .modal-close, .search-box button');
+                buttons.forEach(button => {
+                    button.addEventListener('touchstart', function() {
+                        this.style.opacity = '0.8';
+                        this.style.transform = 'scale(0.98)';
+                    });
+                    
+                    button.addEventListener('touchend', function() {
+                        this.style.opacity = '';
+                        this.style.transform = '';
+                    });
+                    
+                    button.addEventListener('touchcancel', function() {
+                        this.style.opacity = '';
+                        this.style.transform = '';
+                    });
+                });
+                
+                // Evitar scroll duplo em iOS
+                document.addEventListener('touchmove', function(e) {
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                
+                // Ajustar overlay para mobile
+                const overlay = document.querySelector('.overlay');
+                if (overlay) {
+                    overlay.addEventListener('touchmove', function(e) {
+                        e.preventDefault();
+                    }, { passive: false });
+                }
+                
+                // Mostrar alerta de otimização mobile
+                setTimeout(() => {
+                    mostrarNotificacao("📱 Modo mobile ativado. Interface otimizada para dispositivos móveis.", "info");
+                }, 1000);
+            }
+        }
+        
+        // ==============================================
+        // FUNÇÕES PRINCIPAIS DO SISTEMA
+        // ==============================================
+        
         // MOTOR DE PROCESSAMENTO DE ARQUIVO
         function processarArquivo(input) {
             const file = input.files[0];
@@ -1600,6 +2096,13 @@
             
             // Mostrar notificação de sucesso
             mostrarNotificacao(`Petição ${area} avaliada por ${especialistas.juizes.length + especialistas.professores.length} especialistas! Economia estimada: ${tempoEconomizado}`, "success");
+            
+            // Ajustar scroll para mobile
+            if (isMobileDevice()) {
+                setTimeout(() => {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 300);
+            }
         }
         
         function gerarAvaliacoesEspecialistas(area, relato) {
@@ -1750,7 +2253,7 @@
                              + `por seu advogado, vem propor a presente ${rito.toUpperCase()}, com fundamento no ${lei}, pelas razões a seguir expostas:\n\n`
                              + `I - DOS FATOS:\n${relato}\n\n`
                              + `II - DO DIREITO:\nAplicação da legislação material pertinente, com suporte na jurisprudência dos Tribunais Superiores.\n\n`
-                             + `III - DOS PEDIDOS:\nRequer a procedência do pedido, com condenação da parte ré nos honorários advocatícios e custas processuais.\n\n`
+                             + `III - DOS PEDIDOS:\nRequer a procedência do pedido, condenação da parte ré nos honorários advocatícios e custas processuais.\n\n`
                              + `VALOR DA CAUSA: R$ ${valor}.\n\n`
                              + `Nestes termos,\nPede deferimento.\n\n`
                              + `Local, ${dataAtual}.\n\n`
@@ -1760,7 +2263,14 @@
                              + `CERTIFICAÇÃO: Documento revisado e aprovado pelo corpo técnico completo.`;
             }
             
-            editor.innerText = corpoPeticao;
+            editor.innerHTML = corpoPeticao;
+            
+            // Ajustar scroll para mobile
+            if (isMobileDevice()) {
+                setTimeout(() => {
+                    editor.scrollTop = 0;
+                }, 100);
+            }
         }
         
         function atualizarVadeMecum(area) {
@@ -1817,6 +2327,12 @@
         function abrirModalAreaBranco() {
             document.getElementById('modal-area-branco').style.display = 'block';
             document.querySelector('.overlay').style.display = 'block';
+            
+            // Ajustar para mobile
+            if (isMobileDevice()) {
+                const modal = document.getElementById('modal-area-branco');
+                modal.scrollTop = 0;
+            }
         }
         
         function fecharModalAreaBranco() {
@@ -1854,8 +2370,15 @@
                    + `OAB: ____________\n\n`
                    + `CERTIFICAÇÃO: Este modelo segue os padrões validados pelo corpo técnico completo da Inteligência Forense Pro.`;
             
-            editor.innerText = modelo;
+            editor.innerHTML = modelo;
             mostrarNotificacao(`Modelo em branco da área ${area} validado por todos os ${especialistasTotal} especialistas!`, "success");
+            
+            // Ajustar scroll para mobile
+            if (isMobileDevice()) {
+                setTimeout(() => {
+                    editor.scrollTop = 0;
+                }, 100);
+            }
         }
         
         // DICIONÁRIO AURÉLIO COMPLETO - AGORA COM RESULTADO PARA TUDO
@@ -1900,6 +2423,12 @@
             document.querySelector('.overlay').style.display = 'block';
             document.getElementById('dicionario-input').focus();
             mostrarExemplosDicionario();
+            
+            // Ajustar para mobile
+            if (isMobileDevice()) {
+                const modal = document.getElementById('modal-dicionario');
+                modal.scrollTop = 0;
+            }
         }
         
         function fecharDicionario() {
@@ -2007,6 +2536,11 @@
                 }
                 
                 resultado.innerHTML = resultadoHTML;
+                
+                // Ajustar scroll para mobile
+                if (isMobileDevice()) {
+                    resultado.scrollTop = 0;
+                }
             }, 500);
         }
         
@@ -2097,6 +2631,12 @@
             document.querySelector('.overlay').style.display = 'block';
             document.getElementById('academic-result-container').classList.add('hidden');
             document.getElementById('btn-copiar-trabalho').classList.add('hidden');
+            
+            // Ajustar para mobile
+            if (isMobileDevice()) {
+                const modal = document.getElementById('modal-academico');
+                modal.scrollTop = 0;
+            }
         }
         
         function fecharAcademico() {
@@ -2278,6 +2818,12 @@
                 document.getElementById('academic-result-container').classList.remove('hidden');
                 document.getElementById('btn-copiar-trabalho').classList.remove('hidden');
                 
+                // Ajustar scroll para mobile
+                if (isMobileDevice()) {
+                    const resultContainer = document.getElementById('academic-result-container');
+                    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                
                 mostrarNotificacao(`Trabalho acadêmico completo gerado com sucesso! Avaliado por ${totalEspecialistas} especialistas.`, "success");
             }, 1500);
         }
@@ -2299,6 +2845,9 @@
             
             navigator.clipboard.writeText(conteudo).then(() => {
                 mostrarNotificacao("Trabalho acadêmico copiado para a área de transferência!", "success");
+            }).catch(err => {
+                console.error('Erro ao copiar:', err);
+                mostrarNotificacao("Erro ao copiar. Tente selecionar e copiar manualmente.", "error");
             });
         }
         
@@ -2353,6 +2902,12 @@
         function abrirVade() { 
             document.getElementById('modal-vade').style.display = 'block'; 
             document.querySelector('.overlay').style.display = 'block'; 
+            
+            // Ajustar para mobile
+            if (isMobileDevice()) {
+                const modal = document.getElementById('modal-vade');
+                modal.scrollTop = 0;
+            }
         }
         
         function salvarPDF() { 
@@ -2371,7 +2926,8 @@
                 html2canvas: { 
                     scale: 2,
                     useCORS: true,
-                    letterRendering: true
+                    letterRendering: true,
+                    scrollY: 0
                 },
                 jsPDF: { 
                     unit: 'mm', 
@@ -2382,15 +2938,32 @@
                 pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
             };
             
-            html2pdf().set(opt).from(editor).save().then(() => {
-                mostrarNotificacao("PDF gerado com sucesso!", "success");
-            });
+            // Salvar a posição atual do scroll para restaurar depois
+            const scrollPosition = window.scrollY;
+            
+            // Para mobile, garantir que o conteúdo esteja visível
+            if (isMobileDevice()) {
+                editor.scrollTop = 0;
+                setTimeout(() => {
+                    html2pdf().set(opt).from(editor).save().then(() => {
+                        mostrarNotificacao("PDF gerado com sucesso!", "success");
+                        window.scrollTo(0, scrollPosition);
+                    });
+                }, 300);
+            } else {
+                html2pdf().set(opt).from(editor).save().then(() => {
+                    mostrarNotificacao("PDF gerado com sucesso!", "success");
+                });
+            }
         }
         
         function copiarLei() { 
             const texto = document.getElementById('vade-resultado').innerText;
             navigator.clipboard.writeText(texto).then(() => {
                 mostrarNotificacao("Base legal copiada para a área de transferência!", "success");
+            }).catch(err => {
+                console.error('Erro ao copiar:', err);
+                mostrarNotificacao("Erro ao copiar. Tente selecionar e copiar manualmente.", "error");
             });
         }
         
@@ -2399,9 +2972,10 @@
             const notificacao = document.createElement('div');
             notificacao.style.cssText = `
                 position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
+                top: ${isMobileDevice() ? '10px' : '20px'};
+                right: ${isMobileDevice() ? '10px' : '20px'};
+                left: ${isMobileDevice() ? '10px' : 'auto'};
+                padding: ${isMobileDevice() ? '12px 15px' : '15px 20px'};
                 border-radius: 8px;
                 font-weight: 600;
                 z-index: 10000;
@@ -2410,24 +2984,26 @@
                 gap: 10px;
                 box-shadow: 0 5px 15px rgba(0,0,0,0.3);
                 animation: slideIn 0.3s ease;
-                max-width: 400px;
+                max-width: ${isMobileDevice() ? 'calc(100vw - 20px)' : '400px'};
+                font-size: ${isMobileDevice() ? '14px' : 'inherit'};
+                word-break: break-word;
             `;
             
             // Definir cores baseadas no tipo
             if (tipo === "success") {
-                notificacao.style.background = "rgba(46, 204, 113, 0.9)";
+                notificacao.style.background = "rgba(46, 204, 113, 0.95)";
                 notificacao.style.color = "white";
                 notificacao.style.borderLeft = "4px solid #27ae60";
             } else if (tipo === "error") {
-                notificacao.style.background = "rgba(255, 71, 87, 0.9)";
+                notificacao.style.background = "rgba(255, 71, 87, 0.95)";
                 notificacao.style.color = "white";
                 notificacao.style.borderLeft = "4px solid #ff3838";
             } else if (tipo === "warning") {
-                notificacao.style.background = "rgba(255, 193, 7, 0.9)";
+                notificacao.style.background = "rgba(255, 193, 7, 0.95)";
                 notificacao.style.color = "black";
                 notificacao.style.borderLeft = "4px solid #ffa502";
             } else {
-                notificacao.style.background = "rgba(52, 152, 219, 0.9)";
+                notificacao.style.background = "rgba(52, 152, 219, 0.95)";
                 notificacao.style.color = "white";
                 notificacao.style.borderLeft = "4px solid #3498db";
             }
@@ -2438,7 +3014,7 @@
             if (tipo === "error") icone = "exclamation-circle";
             if (tipo === "warning") icone = "exclamation-triangle";
             
-            notificacao.innerHTML = `<i class="fas fa-${icone}"></i> ${mensagem}`;
+            notificacao.innerHTML = `<i class="fas fa-${icone}"></i> <span>${mensagem}</span>`;
             
             // Adicionar ao corpo
             document.body.appendChild(notificacao);
@@ -2453,25 +3029,34 @@
                 }, 300);
             }, 4000);
             
-            // Adicionar keyframes para animação
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes slideOut {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(100%); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
+            // Adicionar keyframes para animação se não existirem
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.innerHTML = `
+                    @keyframes slideIn {
+                        from { transform: translateX(${isMobileDevice() ? '100%' : '100%'}); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(${isMobileDevice() ? '100%' : '100%'}); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
         }
         
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             // Focar no campo de relato
-            document.getElementById('ia-relato').focus();
+            const relatoField = document.getElementById('ia-relato');
+            if (relatoField) {
+                relatoField.focus();
+            }
+            
+            // Inicializar mobile
+            inicializarMobile();
             
             // Inicializar relógio e clima
             atualizarRelogio();
@@ -2485,8 +3070,32 @@
             
             // Mostrar informações do sistema
             setTimeout(() => {
-                mostrarNotificacao("🚀 Sistema aprimorado! Agora com avaliação de TODOS os especialistas (juízes e professores com mestrado).", "info");
+                if (isMobileDevice()) {
+                    mostrarNotificacao("📱 Modo mobile ativado. Interface otimizada para dispositivos móveis.", "info");
+                } else {
+                    mostrarNotificacao("🚀 Sistema aprimorado! Agora com avaliação de TODOS os especialistas (juízes e professores com mestrado).", "info");
+                }
             }, 1500);
+            
+            // Ajustar ao carregar a página
+            window.addEventListener('load', function() {
+                ajustarEditorMobile();
+                ajustarModaisMobile();
+            });
+            
+            // Ajustar ao mudar orientação
+            window.addEventListener('orientationchange', function() {
+                setTimeout(() => {
+                    ajustarEditorMobile();
+                    ajustarModaisMobile();
+                }, 300);
+            });
+        });
+        
+        // Melhorar toque em overlay
+        document.querySelector('.overlay').addEventListener('touchend', function(e) {
+            fecharModais();
+            e.preventDefault();
         });
     </script>
 </body>

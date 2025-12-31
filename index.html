@@ -3,18 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="Inteligência Forense Pro - IA jurídica que economiza 80% do tempo do advogado na elaboração de petições. Análise automática de casos e geração de documentos prontos.">
-    <title>Inteligência Forense Pro | IA Jurídica para Advogados</title>
+    <meta name="description" content="Inteligência Forense Pro - IA jurídica com especialistas por área do direito, avaliação de juízes e professores, geração de petições personalizadas.">
+    <title>Inteligência Forense Pro | Sistema Jurídico com Especialistas por Área</title>
     
     <!-- Bibliotecas externas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.21/mammoth.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.7.0/build/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* Todos os estilos anteriores permanecem iguais... */
+        /* Apenas adicionando um novo estilo para o botão do Word */
+        
+        .btn-word {
+            background: linear-gradient(to right, #2b5797, #1e3a5f);
+            color: white;
+            border: none;
+            margin-top: 10px;
+        }
+        
+        .btn-word:hover {
+            background: linear-gradient(to right, #1e3a5f, #2b5797);
+        }
+        
+        /* Mantém todos os estilos anteriores... */
         :root {
             --primary: #0a192f;
             --secondary: #172a46;
@@ -115,7 +132,6 @@
             margin-top: -5px;
         }
         
-        /* Botões adicionais acima do Vade Mecum */
         .additional-buttons {
             display: flex;
             flex-direction: column;
@@ -145,7 +161,6 @@
             margin: 0 auto;
         }
         
-        /* SIDEBAR */
         .sidebar {
             background: rgba(23, 42, 70, 0.85);
             backdrop-filter: blur(20px);
@@ -214,7 +229,6 @@
             font-family: 'Inter', sans-serif;
         }
         
-        /* PAINEL DE ANÁLISE EXPANDIDO COM TODOS OS ESPECIALISTAS */
         .veredito-panel {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(197, 160, 89, 0.3);
@@ -266,7 +280,6 @@
             transition: width 1s ease-in-out;
         }
         
-        /* Nova seção para avaliação dos especialistas */
         .avaliacao-especialistas {
             margin-top: 20px;
             padding: 15px;
@@ -348,7 +361,6 @@
             border-left: 3px solid var(--accent);
         }
         
-        /* ÁREA PRINCIPAL */
         .main-content {
             display: flex;
             flex-direction: column;
@@ -386,7 +398,6 @@
             font-weight: 600;
         }
         
-        /* Relógio e clima */
         .weather-time {
             display: flex;
             align-items: center;
@@ -435,7 +446,6 @@
             box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.3), var(--shadow);
         }
         
-        /* BOTÕES */
         .btn {
             padding: 14px;
             border: none;
@@ -494,7 +504,6 @@
             background: rgba(255, 71, 87, 0.1);
         }
         
-        /* MODAIS */
         .modal {
             display: none;
             position: fixed;
@@ -577,7 +586,6 @@
             touch-action: none;
         }
         
-        /* Formulários dentro dos modais */
         .modal-form {
             display: flex;
             flex-direction: column;
@@ -622,7 +630,6 @@
             min-width: 44px;
         }
         
-        /* Resultados do dicionário */
         .dictionary-result {
             padding: 15px;
             background: rgba(0, 0, 0, 0.2);
@@ -664,7 +671,6 @@
             margin-top: 10px;
         }
         
-        /* Resultado do trabalho acadêmico */
         .academic-result {
             padding: 20px;
             background: rgba(0, 0, 0, 0.2);
@@ -746,7 +752,6 @@
             margin-top: 15px;
         }
         
-        /* Modal para seleção de área no modelo em branco */
         .area-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -780,7 +785,6 @@
             color: var(--accent);
         }
         
-        /* BENEFÍCIOS */
         .benefits-bar {
             display: flex;
             justify-content: space-around;
@@ -811,16 +815,13 @@
            RESPONSIVIDADE MOBILE
            ============================ */
         
-        /* Telas menores que 768px (Mobile) */
         @media (max-width: 768px) {
-            /* Ajuste do container principal */
             .container {
                 grid-template-columns: 1fr;
                 gap: 15px;
                 padding: 10px;
             }
             
-            /* Sidebar otimizada para mobile */
             .sidebar {
                 height: auto;
                 position: relative;
@@ -833,7 +834,6 @@
                 -webkit-overflow-scrolling: touch;
             }
             
-            /* Cabeçalho mobile */
             .header {
                 padding: 10px 0;
                 position: relative;
@@ -845,7 +845,6 @@
                 gap: 15px;
             }
             
-            /* Logo mobile */
             .logo {
                 width: 100%;
                 justify-content: center;
@@ -860,20 +859,17 @@
                 font-size: 0.6rem;
             }
             
-            /* Área de relato mobile */
             .input-group textarea {
                 min-height: 100px;
                 font-size: 14px;
             }
             
-            /* Botões mobile */
             .btn {
                 padding: 12px 15px;
                 font-size: 13px;
-                min-height: 44px; /* Tamanho mínimo para toque */
+                min-height: 44px;
             }
             
-            /* Área de edição principal mobile */
             #editor-a4 {
                 width: 100%;
                 min-height: 400px;
@@ -884,7 +880,6 @@
                 -webkit-overflow-scrolling: touch;
             }
             
-            /* Toolbar mobile */
             .toolbar {
                 flex-direction: column;
                 gap: 12px;
@@ -898,11 +893,6 @@
                 gap: 8px;
             }
             
-            .area-tag {
-                align-self: flex-start;
-            }
-            
-            /* Weather/time mobile */
             .weather-time {
                 width: 100%;
                 justify-content: space-between;
@@ -913,7 +903,6 @@
                 padding: 6px 10px;
             }
             
-            /* Painel de veredito mobile */
             .veredito-panel {
                 padding: 15px;
                 margin: 15px 0;
@@ -927,7 +916,6 @@
                 padding: 8px;
             }
             
-            /* Modal mobile */
             .modal {
                 width: 95%;
                 max-height: 90vh;
@@ -942,7 +930,6 @@
                 font-size: 0.9rem;
             }
             
-            /* Grid de áreas mobile */
             .area-grid {
                 grid-template-columns: 1fr;
                 gap: 10px;
@@ -952,13 +939,11 @@
                 padding: 15px 10px;
             }
             
-            /* Formulário acadêmico mobile */
             .form-row {
                 flex-direction: column;
                 gap: 10px;
             }
             
-            /* Benefits bar mobile */
             .benefits-bar {
                 flex-wrap: wrap;
                 gap: 12px;
@@ -970,24 +955,20 @@
                 min-width: 120px;
             }
             
-            /* Botões adicionais mobile */
             .additional-buttons {
                 margin-bottom: 15px;
             }
             
-            /* Otimização de texto mobile */
             p, li, span, div {
                 word-wrap: break-word;
                 overflow-wrap: break-word;
             }
             
-            /* Evitar zoom em inputs no iOS */
             input, textarea, select {
                 font-size: 16px !important;
             }
         }
         
-        /* Telas muito pequenas (menos que 480px) */
         @media (max-width: 480px) {
             .container {
                 padding: 8px;
@@ -1022,7 +1003,6 @@
                 flex: 1 0 100%;
             }
             
-            /* Ajuste dos inputs para touch */
             .input-group input, 
             .input-group textarea, 
             .input-group select {
@@ -1031,7 +1011,6 @@
                 min-height: 48px;
             }
             
-            /* Otimização do painel de especialistas */
             .especialista-nome {
                 flex-direction: column;
                 align-items: flex-start;
@@ -1043,7 +1022,6 @@
             }
         }
         
-        /* Orientação paisagem em mobile */
         @media (max-height: 600px) and (orientation: landscape) {
             .sidebar {
                 max-height: 70vh;
@@ -1058,7 +1036,6 @@
             }
         }
         
-        /* Ajustes para iOS Safari */
         @supports (-webkit-touch-callout: none) {
             .sidebar {
                 padding-bottom: env(safe-area-inset-bottom);
@@ -1069,9 +1046,7 @@
             }
         }
         
-        /* Melhorias de toque para todos os dispositivos */
         @media (hover: none) and (pointer: coarse) {
-            /* Aumentar área de toque para todos os elementos interativos */
             .btn, 
             .area-option,
             .modal-close,
@@ -1080,12 +1055,10 @@
                 min-width: 44px;
             }
             
-            /* Espaçamento adicional para elementos interativos */
             .input-group {
                 margin-bottom: 20px;
             }
             
-            /* Melhorar visualização de dropdowns em mobile */
             select {
                 appearance: none;
                 background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c5a059'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
@@ -1096,7 +1069,6 @@
             }
         }
         
-        /* Animações suaves para mobile */
         @media (prefers-reduced-motion: no-preference) {
             .modal {
                 animation: modalSlideIn 0.3s ease;
@@ -1114,7 +1086,6 @@
             }
         }
         
-        /* Melhorias de legibilidade em mobile */
         @media (max-width: 768px) {
             body {
                 font-size: 14px;
@@ -1125,7 +1096,6 @@
                 line-height: 1.3;
             }
             
-            /* Evitar quebra de palavras importantes */
             .logo-text,
             .modal-title,
             .area-tag {
@@ -1136,20 +1106,17 @@
             }
         }
         
-        /* Ajuste do scroll em mobile */
         @media (max-width: 768px) {
             ::-webkit-scrollbar {
                 width: 4px;
                 height: 4px;
             }
             
-            /* Melhorar arrastar para cima/baixo */
             body {
                 -webkit-overflow-scrolling: touch;
             }
         }
         
-        /* RESPONSIVIDADE GERAL */
         @media (max-width: 1200px) {
             .container {
                 grid-template-columns: 1fr;
@@ -1206,7 +1173,6 @@
             }
         }
         
-        /* UTILIDADES */
         .hidden {
             display: none;
         }
@@ -1255,7 +1221,7 @@
             <div class="logo">
                 <div>
                     <div class="logo-text">INTELIGÊNCIA FORENSE PRO</div>
-                    <div class="logo-subtitle">IA JURÍDICA • ECONOMIA DE TEMPO • PRECISÃO LEGAL • AVALIAÇÃO MULTIPLOS ESPECIALISTAS</div>
+                    <div class="logo-subtitle">ESPECIALISTAS POR ÁREA DO DIREITO • AVALIAÇÃO DE JUÍZES • PETIÇÕES PERSONALIZADAS</div>
                 </div>
             </div>
             <div class="weather-time">
@@ -1273,16 +1239,16 @@
             </div>
             <div class="benefits-bar" style="background: transparent; padding: 0; border: none;">
                 <div class="benefit">
-                    <i class="fas fa-clock"></i>
-                    <div class="benefit-text">Economize 80% do tempo</div>
+                    <i class="fas fa-users"></i>
+                    <div class="benefit-text">12 Especialistas</div>
                 </div>
                 <div class="benefit">
-                    <i class="fas fa-balance-scale"></i>
-                    <div class="benefit-text">Avaliação múltiplos especialistas</div>
+                    <i class="fas fa-gavel"></i>
+                    <div class="benefit-text">3 Juízes Ativos</div>
                 </div>
                 <div class="benefit">
-                    <i class="fas fa-file-contract"></i>
-                    <div class="benefit-text">Documentos ABNT prontos</div>
+                    <i class="fas fa-graduation-cap"></i>
+                    <div class="benefit-text">9 Professores Mestres</div>
                 </div>
             </div>
         </div>
@@ -1290,7 +1256,6 @@
     
     <div class="container">
         <aside class="sidebar">
-            <!-- Botões adicionais -->
             <div class="additional-buttons">
                 <button class="btn btn-dictionary" onclick="abrirDicionario()">
                     <i class="fas fa-book"></i> DICIONÁRIO AURÉLIO
@@ -1312,13 +1277,11 @@
                 <textarea id="ia-relato" rows="8" placeholder="Descreva os fatos do caso aqui ou faça upload de um documento para análise automática..."></textarea>
             </div>
             
-            <!-- Painel de Análise Expandido com Todos os Especialistas -->
             <div id="veredito-panel" class="veredito-panel">
                 <div class="veredito-header">
                     <i class="fas fa-chart-line"></i> ANÁLISE JURÍDICA MULTIDISCIPLINAR
                 </div>
                 
-                <!-- Pontuação Consolidada -->
                 <div class="pontuacao-consolidada">
                     <div style="font-size: 0.7rem; color: var(--text-gray);">PONTUAÇÃO MÉDIA DOS ESPECIALISTAS</div>
                     <div class="pontuacao-media" id="pontuacao-media">0%</div>
@@ -1344,18 +1307,15 @@
                     </div>
                 </div>
                 
-                <!-- Avaliação dos Especialistas -->
                 <div class="avaliacao-especialistas">
                     <div class="avaliacao-header">
-                        <i class="fas fa-user-tie"></i> AVALIAÇÃO DOS ESPECIALISTAS
+                        <i class="fas fa-user-tie"></i> AVALIAÇÃO DOS ESPECIALISTAS POR ÁREA
                     </div>
-                    <div id="lista-especialistas">
-                        <!-- Os especialistas serão inseridos aqui dinamicamente -->
-                    </div>
+                    <div id="lista-especialistas"></div>
                 </div>
                 
                 <div id="juiz-comentario" class="veredito-comentario">
-                    Análise será exibida aqui após processamento do caso por todos os especialistas.
+                    Análise será exibida aqui após processamento do caso por todos os especialistas da área correspondente.
                 </div>
             </div>
             
@@ -1392,7 +1352,7 @@
             
             <div style="margin-top: auto;">
                 <button class="btn btn-primary" onclick="analisarEGerarComTodosEspecialistas()">
-                    <i class="fas fa-users"></i> GERAR PETIÇÃO COM TODOS ESPECIALISTAS
+                    <i class="fas fa-users"></i> GERAR PETIÇÃO COM ESPECIALISTAS DA ÁREA
                 </button>
                 
                 <label class="btn btn-upload">
@@ -1401,7 +1361,11 @@
                 </label>
                 
                 <button class="btn" onclick="abrirModalAreaBranco()" style="background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1);">
-                    <i class="fas fa-file-alt"></i> MODELO EM BRANCO
+                    <i class="fas fa-file-alt"></i> MODELO POR ÁREA DO DIREITO
+                </button>
+                
+                <button class="btn btn-word" onclick="salvarWord()">
+                    <i class="fas fa-file-word"></i> SALVAR PETIÇÃO (WORD ABNT)
                 </button>
                 
                 <button class="btn btn-danger" onclick="confirmarReset()">
@@ -1417,21 +1381,22 @@
                     <span id="label-area">AGUARDANDO ANÁLISE DO CASO...</span>
                     <div id="area-tag" class="area-tag hidden"></div>
                 </div>
-                <button class="btn btn-primary" style="width: auto; padding: 10px 25px;" onclick="salvarPDF()">
-                    <i class="fas fa-file-pdf"></i> EXPORTAR PETIÇÃO (PDF ABNT)
-                </button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-primary" style="width: auto; padding: 10px 25px;" onclick="salvarPDF()">
+                        <i class="fas fa-file-pdf"></i> EXPORTAR PDF ABNT
+                    </button>
+                    <button class="btn btn-word" style="width: auto; padding: 10px 25px;" onclick="salvarWord()">
+                        <i class="fas fa-file-word"></i> EXPORTAR WORD ABNT
+                    </button>
+                </div>
             </div>
             
-            <div id="editor-a4" contenteditable="true" placeholder="A petição será gerada automaticamente após análise do caso por todos os especialistas...">
-                <!-- Conteúdo será inserido aqui -->
-            </div>
+            <div id="editor-a4" contenteditable="true" placeholder="A petição será gerada automaticamente após análise do caso pelos especialistas da área correspondente..."></div>
         </main>
     </div>
     
-    <!-- OVERLAY PARA MODAIS -->
     <div class="overlay" onclick="fecharModais()"></div>
     
-    <!-- MODAL VADE MECUM -->
     <div id="modal-vade" class="modal">
         <div class="modal-header">
             <div class="modal-title">
@@ -1456,7 +1421,6 @@
         </button>
     </div>
     
-    <!-- MODAL DICIONÁRIO AURÉLIO -->
     <div id="modal-dicionario" class="modal">
         <div class="modal-header">
             <div class="modal-title">
@@ -1494,7 +1458,6 @@
         </div>
     </div>
     
-    <!-- MODAL TRABALHO ACADÊMICO -->
     <div id="modal-academico" class="modal">
         <div class="modal-header">
             <div class="modal-title">
@@ -1504,7 +1467,7 @@
         </div>
         <div class="modal-content">
             <p style="margin-bottom: 20px; color: var(--accent); font-weight: 600;">
-                <i class="fas fa-lightbulb"></i> Preencha os campos abaixo para que todos os <strong>Professores Experts em Direito com Mestrado</strong> e <strong>Todos os Juízes da página</strong> elaborem um trabalho acadêmico completo com capa e contracapa:
+                <i class="fas fa-lightbulb"></i> Preencha os campos abaixo para que os <strong>Professores Experts em Direito com Mestrado</strong> da área específica elaborem um trabalho acadêmico completo com capa e contracapa:
             </p>
             
             <form class="modal-form" id="form-academico">
@@ -1599,8 +1562,8 @@
             </div>
         </div>
         <div style="display: flex; gap: 10px;">
-            <button class="btn btn-primary" onclick="gerarTrabalhoAcademicoComTodosEspecialistas()" style="flex: 1;">
-                <i class="fas fa-users"></i> GERAR COM TODOS ESPECIALISTAS
+            <button class="btn btn-primary" onclick="gerarTrabalhoAcademicoComEspecialistas()" style="flex: 1;">
+                <i class="fas fa-users"></i> GERAR COM ESPECIALISTAS DA ÁREA
             </button>
             <button class="btn btn-secondary" onclick="copiarTrabalho()" style="flex: 1;" id="btn-copiar-trabalho" class="hidden">
                 <i class="fas fa-copy"></i> COPIAR TRABALHO
@@ -1608,7 +1571,6 @@
         </div>
     </div>
     
-    <!-- MODAL SELEÇÃO DE ÁREA PARA MODELO EM BRANCO -->
     <div id="modal-area-branco" class="modal">
         <div class="modal-header">
             <div class="modal-title">
@@ -1618,7 +1580,7 @@
         </div>
         <div class="modal-content">
             <p style="margin-bottom: 20px; color: var(--accent); font-weight: 600;">
-                <i class="fas fa-lightbulb"></i> Selecione a área do direito para gerar um modelo em branco personalizado por <strong>Todos os Juízes da Página</strong> e <strong>Todos os Professores com Mestrado</strong>:
+                <i class="fas fa-lightbulb"></i> Selecione a área do direito para gerar um modelo em branco personalizado com estrutura específica conforme Art. 319 CPC:
             </p>
             
             <div class="area-grid">
@@ -1626,7 +1588,7 @@
                     <i class="fas fa-balance-scale area-icon"></i>
                     <div>
                         <div style="font-weight: 700;">CÍVEL</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito das obrigações, contratos, responsabilidade civil</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Indenizações, contratos, responsabilidade civil</div>
                     </div>
                 </div>
                 
@@ -1634,7 +1596,7 @@
                     <i class="fas fa-gavel area-icon"></i>
                     <div>
                         <div style="font-weight: 700;">CRIMINAL</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Penal, Processo Penal, Defesa, Acusação</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Queixa-crime, defesa, habeas corpus</div>
                     </div>
                 </div>
                 
@@ -1642,7 +1604,7 @@
                     <i class="fas fa-briefcase area-icon"></i>
                     <div>
                         <div style="font-weight: 700;">TRABALHISTA</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">CLT, Direitos trabalhistas, Reclamações</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Reclamatória, verbas rescisórias, acidente</div>
                     </div>
                 </div>
                 
@@ -1650,39 +1612,7 @@
                     <i class="fas fa-home area-icon"></i>
                     <div>
                         <div style="font-weight: 700;">FAMÍLIA</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Divórcio, Guarda, Pensão, Inventário</div>
-                    </div>
-                </div>
-                
-                <div class="area-option" onclick="selecionarAreaModelo('Administrativo')">
-                    <i class="fas fa-landmark area-icon"></i>
-                    <div>
-                        <div style="font-weight: 700;">ADMINISTRATIVO</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Administrativo, Licitações, Serviços Públicos</div>
-                    </div>
-                </div>
-                
-                <div class="area-option" onclick="selecionarAreaModelo('Tributário')">
-                    <i class="fas fa-file-invoice-dollar area-icon"></i>
-                    <div>
-                        <div style="font-weight: 700;">TRIBUTÁRIO</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Impostos, Taxas, Contribuições, Débitos Fiscais</div>
-                    </div>
-                </div>
-                
-                <div class="area-option" onclick="selecionarAreaModelo('Empresarial')">
-                    <i class="fas fa-building area-icon"></i>
-                    <div>
-                        <div style="font-weight: 700;">EMPRESARIAL</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Sociedades, Falências, Recuperação Judicial</div>
-                    </div>
-                </div>
-                
-                <div class="area-option" onclick="selecionarAreaModelo('Ambiental')">
-                    <i class="fas fa-leaf area-icon"></i>
-                    <div>
-                        <div style="font-weight: 700;">AMBIENTAL</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Ambiental, Licenciamento, Crimes Ambientais</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Divórcio, alimentos, guarda, inventário</div>
                     </div>
                 </div>
                 
@@ -1690,7 +1620,7 @@
                     <i class="fas fa-shopping-cart area-icon"></i>
                     <div>
                         <div style="font-weight: 700;">CONSUMIDOR</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">CDC, Relações de Consumo, Direitos do Consumidor</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">CDC, vício do produto, cobrança indevida</div>
                     </div>
                 </div>
                 
@@ -1698,23 +1628,23 @@
                     <i class="fas fa-user-md area-icon"></i>
                     <div>
                         <div style="font-weight: 700;">PREVIDENCIÁRIO</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">INSS, Aposentadoria, Benefícios Previdenciários</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">INSS, aposentadoria, benefícios, revisão</div>
                     </div>
                 </div>
                 
-                <div class="area-option" onclick="selecionarAreaModelo('Eleitoral')">
-                    <i class="fas fa-vote-yea area-icon"></i>
+                <div class="area-option" onclick="selecionarAreaModelo('Administrativo')">
+                    <i class="fas fa-landmark area-icon"></i>
                     <div>
-                        <div style="font-weight: 700;">ELEITORAL</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Eleitoral, Eleições, Candidaturas</div>
+                        <div style="font-weight: 700;">ADMINISTRATIVO</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Licitações, servidores, improbidade</div>
                     </div>
                 </div>
                 
-                <div class="area-option" onclick="selecionarAreaModelo('Internacional')">
-                    <i class="fas fa-globe-americas area-icon"></i>
+                <div class="area-option" onclick="selecionarAreaModelo('Tributário')">
+                    <i class="fas fa-file-invoice-dollar area-icon"></i>
                     <div>
-                        <div style="font-weight: 700;">INTERNACIONAL</div>
-                        <div style="font-size: 0.8rem; color: var(--text-gray);">Direito Internacional, Tratados, Extradição</div>
+                        <div style="font-weight: 700;">TRIBUTÁRIO</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Impostos, execução fiscal, parcelamento</div>
                     </div>
                 </div>
             </div>
@@ -1723,13 +1653,11 @@
     
     <script>
         // ==============================================
-        // SISTEMA DE ESPECIALISTAS COM MESTRADO E JUIZES
+        // SISTEMA DE ESPECIALISTAS POR ÁREA DO DIREITO
         // ==============================================
         
-        // BASE DE ESPECIALISTAS - TODOS COM MESTRADO
-        const especialistas = {
-            // JUÍZES ADICIONAIS (3 JUÍZES NO TOTAL)
-            juizes: [
+        const especialistasPorArea = {
+            "Cível": [
                 {
                     id: 1,
                     nome: "Dr. Carlos Mendes",
@@ -1741,38 +1669,6 @@
                 },
                 {
                     id: 2,
-                    nome: "Dra. Mariana Costa",
-                    titulo: "Juíza Criminal - 2ª Vara Criminal",
-                    especialidade: "Direito Penal e Processo Penal",
-                    mestrado: "Mestre em Ciências Criminais pela UFMG",
-                    experiencia: "12 anos de experiência criminal",
-                    cor: "#e74c3c"
-                },
-                {
-                    id: 3,
-                    nome: "Dr. Eduardo Silva",
-                    titulo: "Juiz Trabalhista - 5ª Vara do Trabalho",
-                    especialidade: "Direito do Trabalho e Processo do Trabalho",
-                    mestrado: "Mestre em Direito Social pela USP",
-                    experiencia: "10 anos na Justiça do Trabalho",
-                    cor: "#2ecc71"
-                }
-            ],
-            
-            // PROFESSORES COM MESTRADO EM TODAS AS ÁREAS
-            professores: [
-                {
-                    id: 4,
-                    nome: "Prof. Dr. Augusto César de Almeida",
-                    titulo: "Professor de Direito Constitucional",
-                    especialidade: "Direito Constitucional",
-                    mestrado: "Mestre em Direito Constitucional pela USP",
-                    doutorado: "Doutor em Direito Constitucional pela USP",
-                    experiencia: "20 anos de docência",
-                    cor: "#9b59b6"
-                },
-                {
-                    id: 5,
                     nome: "Profa. Dra. Beatriz Rodrigues",
                     titulo: "Professora de Direito Civil",
                     especialidade: "Direito Civil e Contratos",
@@ -1782,48 +1678,205 @@
                     cor: "#f39c12"
                 },
                 {
-                    id: 6,
+                    id: 3,
+                    nome: "Dr. Roberto Almeida",
+                    titulo: "Especialista em Responsabilidade Civil",
+                    especialidade: "Danos Materiais e Morais",
+                    mestrado: "Mestre em Direito Civil pela UFMG",
+                    experiencia: "12 anos de atuação",
+                    cor: "#1abc9c"
+                }
+            ],
+            
+            "Criminal": [
+                {
+                    id: 4,
+                    nome: "Dra. Mariana Costa",
+                    titulo: "Juíza Criminal - 2ª Vara Criminal",
+                    especialidade: "Direito Penal e Processo Penal",
+                    mestrado: "Mestre em Ciências Criminais pela UFMG",
+                    experiencia: "12 anos de experiência criminal",
+                    cor: "#e74c3c"
+                },
+                {
+                    id: 5,
                     nome: "Prof. Me. Roberto Santos",
                     titulo: "Professor de Direito Penal",
                     especialidade: "Direito Penal e Processo Penal",
                     mestrado: "Mestre em Ciências Criminais pela UFMG",
                     experiencia: "15 anos de docência",
-                    cor: "#1abc9c"
+                    cor: "#c0392b"
                 },
                 {
+                    id: 6,
+                    nome: "Dr. Fernando Silva",
+                    titulo: "Especialista em Processo Penal",
+                    especialidade: "Recursos e Habeas Corpus",
+                    mestrado: "Mestre em Direito Penal pela USP",
+                    experiencia: "10 anos de atuação",
+                    cor: "#d35400"
+                }
+            ],
+            
+            "Trabalhista": [
+                {
                     id: 7,
+                    nome: "Dr. Eduardo Silva",
+                    titulo: "Juiz Trabalhista - 5ª Vara do Trabalho",
+                    especialidade: "Direito do Trabalho e Processo do Trabalho",
+                    mestrado: "Mestre em Direito Social pela USP",
+                    experiencia: "10 anos na Justiça do Trabalho",
+                    cor: "#2ecc71"
+                },
+                {
+                    id: 8,
                     nome: "Profa. Dra. Camila Oliveira",
                     titulo: "Professora de Direito do Trabalho",
                     especialidade: "Direito do Trabalho e Processo do Trabalho",
                     mestrado: "Mestre em Direito Social pela USP",
                     doutorado: "Doutora em Direito do Trabalho pela UNB",
                     experiencia: "12 anos de docência",
-                    cor: "#d35400"
+                    cor: "#27ae60"
                 },
                 {
-                    id: 8,
+                    id: 9,
+                    nome: "Dra. Ana Paula Mendes",
+                    titulo: "Especialista em Relações Trabalhistas",
+                    especialidade: "Rescisão e Verbas Trabalhistas",
+                    mestrado: "Mestre em Direito do Trabalho pela UFRJ",
+                    experiencia: "8 anos de atuação",
+                    cor: "#16a085"
+                }
+            ],
+            
+            "Família": [
+                {
+                    id: 10,
+                    nome: "Dra. Juliana Santos",
+                    titulo: "Juíza de Família - 3ª Vara de Família",
+                    especialidade: "Direito de Família e Sucessões",
+                    mestrado: "Mestre em Direito de Família pela UFPR",
+                    experiencia: "8 anos na Vara de Família",
+                    cor: "#9b59b6"
+                },
+                {
+                    id: 11,
+                    nome: "Prof. Dr. Ricardo Oliveira",
+                    titulo: "Professor de Direito de Família",
+                    especialidade: "Família e Sucessões",
+                    mestrado: "Mestre em Direito de Família pela PUC-RS",
+                    doutorado: "Doutor em Direito Civil pela USP",
+                    experiencia: "10 anos de docência",
+                    cor: "#8e44ad"
+                },
+                {
+                    id: 12,
+                    nome: "Dra. Patricia Lima",
+                    titulo: "Especialista em Mediação Familiar",
+                    especialidade: "Divórcio e Guarda de Menores",
+                    mestrado: "Mestre em Direito de Família pela UFMG",
+                    experiencia: "7 anos de atuação",
+                    cor: "#a569bd"
+                }
+            ],
+            
+            "Consumidor": [
+                {
+                    id: 13,
+                    nome: "Dr. Marcelo Costa",
+                    titulo: "Juiz do Juizado Especial Cível",
+                    especialidade: "Direito do Consumidor",
+                    mestrado: "Mestre em Direito do Consumidor pela UFSC",
+                    experiencia: "6 anos no Juizado Especial",
+                    cor: "#3498db"
+                },
+                {
+                    id: 14,
+                    nome: "Profa. Me. Carla Silva",
+                    titulo: "Professora de Direito do Consumidor",
+                    especialidade: "CDC e Relações de Consumo",
+                    mestrado: "Mestre em Direito do Consumidor pela PUC-SP",
+                    experiencia: "9 anos de docência",
+                    cor: "#2980b9"
+                }
+            ],
+            
+            "Previdenciário": [
+                {
+                    id: 15,
+                    nome: "Dra. Renata Alves",
+                    titulo: "Juíza Federal - 2ª Vara Federal",
+                    especialidade: "Direito Previdenciário",
+                    mestrado: "Mestre em Direito Previdenciário pela UFRJ",
+                    experiencia: "7 anos na Justiça Federal",
+                    cor: "#e67e22"
+                },
+                {
+                    id: 16,
+                    nome: "Prof. Dr. Antonio Mendes",
+                    titulo: "Professor de Direito Previdenciário",
+                    especialidade: "Previdência Social",
+                    mestrado: "Mestre em Direito Previdenciário pela UFMG",
+                    doutorado: "Doutor em Direito Social pela USP",
+                    experiencia: "11 anos de docência",
+                    cor: "#d35400"
+                }
+            ],
+            
+            "Administrativo": [
+                {
+                    id: 17,
+                    nome: "Dr. Paulo Roberto",
+                    titulo: "Juiz Federal - 1ª Vara Federal",
+                    especialidade: "Direito Administrativo",
+                    mestrado: "Mestre em Direito Administrativo pela UFBA",
+                    experiencia: "9 anos na Justiça Federal",
+                    cor: "#1abc9c"
+                },
+                {
+                    id: 18,
                     nome: "Prof. Me. Fernando Lima",
                     titulo: "Professor de Direito Administrativo",
                     especialidade: "Direito Administrativo e Licitações",
                     mestrado: "Mestre em Direito Administrativo pela UFBA",
                     experiencia: "10 anos de docência",
-                    cor: "#8e44ad"
+                    cor: "#16a085"
+                }
+            ],
+            
+            "Tributário": [
+                {
+                    id: 19,
+                    nome: "Dra. Carolina Mendes",
+                    titulo: "Juíza Federal - 4ª Vara Federal",
+                    especialidade: "Direito Tributário",
+                    mestrado: "Mestre em Direito Tributário pela PUC-SP",
+                    experiencia: "8 anos na Justiça Federal",
+                    cor: "#e74c3c"
+                },
+                {
+                    id: 20,
+                    nome: "Prof. Dr. Eduardo Costa",
+                    titulo: "Professor de Direito Tributário",
+                    especialidade: "Direito Tributário e Fiscal",
+                    mestrado: "Mestre em Direito Tributário pela UFMG",
+                    doutorado: "Doutor em Direito Tributário pela USP",
+                    experiencia: "12 anos de docência",
+                    cor: "#c0392b"
                 }
             ]
         };
         
         // ==============================================
-        // MELHORIAS PARA MOBILE
+        // FUNÇÕES DE MOBILE
         // ==============================================
         
-        // Detectar dispositivo móvel
         function isMobileDevice() {
             return (typeof window.orientation !== "undefined") || 
                    (navigator.userAgent.indexOf('IEMobile') !== -1) ||
                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
         
-        // Ajustar altura do editor em mobile
         function ajustarEditorMobile() {
             if (isMobileDevice() && window.innerWidth < 768) {
                 const editor = document.getElementById('editor-a4');
@@ -1832,19 +1885,16 @@
                 const toolbarHeight = toolbar ? toolbar.offsetHeight : 100;
                 const margin = 30;
                 
-                // Definir altura máxima para o editor
                 const maxHeight = Math.max(400, windowHeight - toolbarHeight - margin);
                 editor.style.minHeight = maxHeight + 'px';
                 editor.style.maxHeight = maxHeight + 'px';
                 
-                // Ajustar padding para mobile
                 if (window.innerWidth < 480) {
                     editor.style.padding = "15mm 10mm";
                 }
             }
         }
         
-        // Prevenir zoom em inputs no iOS
         function prevenirZoomIOS() {
             if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
                 const inputs = document.querySelectorAll('input, textarea, select');
@@ -1859,7 +1909,6 @@
             }
         }
         
-        // Ajustar modais para mobile
         function ajustarModaisMobile() {
             if (isMobileDevice()) {
                 const modals = document.querySelectorAll('.modal');
@@ -1869,14 +1918,12 @@
                     modal.style.padding = '20px 15px';
                 });
                 
-                // Ajustar conteúdo dos modais
                 const modalContents = document.querySelectorAll('.modal-content');
                 modalContents.forEach(content => {
                     content.style.maxHeight = '60vh';
                     content.style.fontSize = '14px';
                 });
                 
-                // Ajustar painel de veredito
                 const vereditoPanel = document.getElementById('veredito-panel');
                 if (vereditoPanel) {
                     vereditoPanel.style.maxHeight = '50vh';
@@ -1886,33 +1933,26 @@
             }
         }
         
-        // Inicializar ajustes mobile
         function inicializarMobile() {
             if (isMobileDevice()) {
-                // Adicionar classe mobile ao body para estilos específicos
                 document.body.classList.add('mobile-device');
                 
-                // Ajustar inicial
                 ajustarEditorMobile();
                 ajustarModaisMobile();
                 
-                // Ajustar ao redimensionar
                 window.addEventListener('resize', function() {
                     ajustarEditorMobile();
                     ajustarModaisMobile();
                 });
                 
-                // Prevenir zoom iOS
                 prevenirZoomIOS();
                 
-                // Ajustar área de texto para mobile
                 const textarea = document.getElementById('ia-relato');
                 if (textarea) {
                     textarea.style.minHeight = '120px';
                     textarea.style.fontSize = '16px';
                 }
                 
-                // Melhorar experiência de toque em botões
                 const buttons = document.querySelectorAll('.btn, .area-option, .modal-close, .search-box button');
                 buttons.forEach(button => {
                     button.addEventListener('touchstart', function() {
@@ -1931,25 +1971,18 @@
                     });
                 });
                 
-                // Evitar scroll duplo em iOS
                 document.addEventListener('touchmove', function(e) {
                     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
                         e.preventDefault();
                     }
                 }, { passive: false });
                 
-                // Ajustar overlay para mobile
                 const overlay = document.querySelector('.overlay');
                 if (overlay) {
                     overlay.addEventListener('touchmove', function(e) {
                         e.preventDefault();
                     }, { passive: false });
                 }
-                
-                // Mostrar alerta de otimização mobile
-                setTimeout(() => {
-                    mostrarNotificacao("📱 Modo mobile ativado. Interface otimizada para dispositivos móveis.", "info");
-                }, 1000);
             }
         }
         
@@ -1957,7 +1990,6 @@
         // FUNÇÕES PRINCIPAIS DO SISTEMA
         // ==============================================
         
-        // MOTOR DE PROCESSAMENTO DE ARQUIVO
         function processarArquivo(input) {
             const file = input.files[0];
             if (!file) return;
@@ -1965,7 +1997,6 @@
             const fileName = file.name;
             const extension = fileName.split('.').pop().toLowerCase();
             
-            // Verificar tamanho do arquivo (limite de 5MB)
             if (file.size > 5 * 1024 * 1024) {
                 alert("Arquivo muito grande. Por favor, selecione um arquivo menor que 5MB.");
                 return;
@@ -1993,7 +2024,6 @@
                     mostrarNotificacao("Documento de texto carregado com sucesso!", "success");
                     setTimeout(() => analisarEGerarComTodosEspecialistas(), 500);
                 } else if (extension === 'pdf') {
-                    // Para PDF, informar que não é suportado para extração automática
                     mostrarNotificacao("Para arquivos PDF, copie e cole o conteúdo manualmente no campo de descrição.", "info");
                     document.getElementById('ia-relato').value = `[ARQUIVO PDF CARREGADO: ${fileName}]\n\nPor favor, cole o conteúdo do PDF aqui para análise.`;
                     document.getElementById('ia-relato').focus();
@@ -2013,7 +2043,6 @@
             }
         }
         
-        // FUNÇÃO PRINCIPAL DE ANÁLISE COM TODOS OS ESPECIALISTAS
         function analisarEGerarComTodosEspecialistas() {
             const relato = document.getElementById('ia-relato').value.trim();
             if (!relato) {
@@ -2024,80 +2053,113 @@
             const relatoLower = relato.toLowerCase();
             const editor = document.getElementById('editor-a4');
             const panel = document.getElementById('veredito-panel');
-            const juriBox = document.getElementById('juri-box');
             const areaTag = document.getElementById('area-tag');
             const listaEspecialistas = document.getElementById('lista-especialistas');
             
-            // Mostrar painel de análise
             panel.style.display = "block";
             
-            // Inicializar variáveis
             let area = "Cível";
-            let rito = "Petição Inicial";
-            let lei = "Art. 319 do CPC/2015";
+            let estrutura = "Ação de Indenização";
+            let pontosChave = "Nexo de causalidade entre erro e dano";
+            let fundamentos = "Art. 186 e 927 do Código Civil";
             let tempoEconomizado = "4-6 horas";
+            let juriRelevante = false;
             
-            // CLASSIFICADOR DE ÁREA JURÍDICA
             if (relatoLower.includes("matar") || relatoLower.includes("homicídio") || relatoLower.includes("infanticídio") || 
                 relatoLower.includes("roubo") || relatoLower.includes("furto") || relatoLower.includes("estupro") ||
-                relatoLower.includes("tráfico") || relatoLower.includes("crime") || relatoLower.includes("penal")) {
+                relatoLower.includes("tráfico") || relatoLower.includes("crime") || relatoLower.includes("penal") ||
+                relatoLower.includes("calúnia") || relatoLower.includes("difamação") || relatoLower.includes("injúria")) {
                 area = "Criminal";
-                rito = "Resposta à Acusação / Defesa Preliminar";
-                lei = "Art. 396-A do CPP";
-                juriBox.classList.remove("hidden");
+                estrutura = "Queixa-Crime";
+                pontosChave = "Prazo decadencial de 6 meses e procuração com poderes especiais";
+                fundamentos = "Art. 100, § 2º do CP e Art. 30 e seguintes do CPP";
                 tempoEconomizado = "5-8 horas";
+                juriRelevant = true;
                 
             } else if (relatoLower.includes("demissão") || relatoLower.includes("trabalho") || relatoLower.includes("hora extra") ||
                       relatoLower.includes("rescisão") || relatoLower.includes("fgts") || relatoLower.includes("verbas") ||
-                      relatoLower.includes("assinou carta") || relatoLower.includes("assédio") || relatoLower.includes("acidente")) {
+                      relatoLower.includes("assinou carta") || relatoLower.includes("assédio") || relatoLower.includes("acidente") ||
+                      relatoLower.includes("salário") || relatoLower.includes("horário") || relatoLower.includes("carteira")) {
                 area = "Trabalhista";
-                rito = "Reclamação Trabalhista";
-                lei = "Art. 840, §1º da CLT";
+                estrutura = "Reclamatória Trabalhista";
+                pontosChave = "Liquidação precisa de todas as verbas rescisórias";
+                fundamentos = "CLT e Constituição Federal (Art. 7º)";
                 tempoEconomizado = "3-5 horas";
-                
-            } else if (relatoLower.includes("contrato") || relatoLower.includes("compra") || relatoLower.includes("venda") ||
-                      relatoLower.includes("inadimplemento") || relatoLower.includes("cobrança") || relatoLower.includes("danos") ||
-                      relatoLower.includes("indenização") || relatoLower.includes("empresarial") || relatoLower.includes("sociedade")) {
-                area = "Cível";
-                rito = "Petição Inicial";
-                lei = "Art. 319 do CPC/2015";
-                tempoEconomizado = "2-4 horas";
                 
             } else if (relatoLower.includes("divórcio") || relatoLower.includes("pensão") || relatoLower.includes("alimentos") ||
                       relatoLower.includes("guarda") || relatoLower.includes("visitação") || relatoLower.includes("família") ||
-                      relatoLower.includes("união estável") || relatoLower.includes("inventário")) {
+                      relatoLower.includes("união estável") || relatoLower.includes("inventário") || relatoLower.includes("herança")) {
                 area = "Família";
-                rito = "Petição Inicial";
-                lei = "Art. 319 do CPC c/c Lei 13.105/2015";
+                estrutura = "Ação de Alimentos / Divórcio";
+                pontosChave = "Binômio necessidade-possibilidade (alimentos)";
+                fundamentos = "Lei 5.478/68 e Código Civil";
                 tempoEconomizado = "3-5 horas";
+                
+            } else if (relatoLower.includes("consumidor") || relatoLower.includes("produto") || relatoLower.includes("serviço") ||
+                      relatoLower.includes("defeito") || relatoLower.includes("vício") || relatoLower.includes("cobrança") ||
+                      relatoLower.includes("fornecedor") || relatoLower.includes("loja") || relatoLower.includes("comércio")) {
+                area = "Consumidor";
+                estrutura = "Ação do Consumidor";
+                pontosChave = "Inversão do ônus da prova";
+                fundamentos = "Código de Defesa do Consumidor (CDC)";
+                tempoEconomizado = "2-4 horas";
+                
+            } else if (relatoLower.includes("inss") || relatoLower.includes("aposentadoria") || relatoLower.includes("benefício") ||
+                      relatoLower.includes("auxílio") || relatoLower.includes("doença") || relatoLower.includes("previdência") ||
+                      relatoLower.includes("contribuição") || relatoLower.includes("tempo") || relatoLower.includes("idade")) {
+                area = "Previdenciário";
+                estrutura = "Concessão de Benefício";
+                pontosChave = "Prévio indeferimento administrativo";
+                fundamentos = "Lei 8.213/91";
+                tempoEconomizado = "4-6 horas";
+                
+            } else if (relatoLower.includes("imposto") || relatoLower.includes("tributo") || relatoLower.includes("fiscal") ||
+                      relatoLower.includes("icms") || relatoLower.includes("iptu") || relatoLower.includes("irpf") ||
+                      relatoLower.includes("multa") || relatoLower.includes("dívida") || relatoLower.includes("parcelamento")) {
+                area = "Tributário";
+                estrutura = "Ação Anulatória / Consignação em Pagamento";
+                pontosChave = "Legalidade e anterioridade tributária";
+                fundamentos = "CTN e Constituição Federal";
+                tempoEconomizado = "5-7 horas";
+                
+            } else if (relatoLower.includes("licitação") || relatoLower.includes("concurso") || relatoLower.includes("servidor") ||
+                      relatoLower.includes("funcionário") || relatoLower.includes("público") || relatoLower.includes("prefeitura") ||
+                      relatoLower.includes("prefeitura") || relatoLower.includes("estatal") || relatoLower.includes("administração")) {
+                area = "Administrativo";
+                estrutura = "Mandado de Segurança / Ação Popular";
+                pontosChave = "Direito líquido e certo";
+                fundamentos = "Lei 12.016/2009 e Lei 4.717/65";
+                tempoEconomizado = "4-6 horas";
             }
             
-            // GERAR AVALIAÇÕES DE TODOS OS ESPECIALISTAS
-            const avaliacoes = gerarAvaliacoesEspecialistas(area, relato);
+            const juriBox = document.getElementById('juri-box');
+            if (juriRelevante) {
+                juriBox.classList.remove("hidden");
+                document.getElementById('percent-juri').innerText = "85%";
+                document.getElementById('bar-juri').style.width = "85%";
+            } else {
+                juriBox.classList.add("hidden");
+            }
             
-            // ATUALIZAR PONTUAÇÃO MÉDIA
+            const especialistasArea = especialistasPorArea[area] || especialistasPorArea["Cível"];
+            const avaliacoes = gerarAvaliacoesEspecialistas(area, relato, especialistasArea);
+            
             const pontuacaoMedia = calcularPontuacaoMedia(avaliacoes);
             document.getElementById('pontuacao-media').innerText = pontuacaoMedia + "%";
             
-            // ATUALIZAR INDICADORES VISUAIS
             document.getElementById('percent-juiz').innerText = pontuacaoMedia + "%";
             document.getElementById('bar-juiz').style.width = pontuacaoMedia + "%";
             
-            // ATUALIZAR BARRA SUPERIOR
-            document.getElementById('label-area').innerHTML = `<i class="fas fa-gavel"></i> ÁREA: ${area.toUpperCase()} | RITO: ${rito.toUpperCase()} | AVALIADO POR ${especialistas.juizes.length + especialistas.professores.length} ESPECIALISTAS`;
+            document.getElementById('label-area').innerHTML = `<i class="fas fa-gavel"></i> ÁREA: ${area.toUpperCase()} | ESTRUTURA: ${estrutura.toUpperCase()} | AVALIADO POR ${especialistasArea.length} ESPECIALISTAS`;
             areaTag.innerText = area.toUpperCase();
             areaTag.classList.remove("hidden");
             
-            // GERAR PETIÇÃO AUTOMÁTICA
-            gerarPeticaoPorArea(area, relato, rito, lei);
+            gerarPeticaoPorArea(area, relato, estrutura, pontosChave, fundamentos);
             
-            // Atualizar Vade Mecum
-            atualizarVadeMecum(area);
+            atualizarVadeMecum(area, fundamentos);
             
-            // Mostrar notificação de sucesso
-            mostrarNotificacao(`Petição ${area} avaliada por ${especialistas.juizes.length + especialistas.professores.length} especialistas! Economia estimada: ${tempoEconomizado}`, "success");
+            mostrarNotificacao(`Petição ${area} avaliada por ${especialistasArea.length} especialistas! Economia estimada: ${tempoEconomizado}`, "success");
             
-            // Ajustar scroll para mobile
             if (isMobileDevice()) {
                 setTimeout(() => {
                     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -2105,39 +2167,26 @@
             }
         }
         
-        function gerarAvaliacoesEspecialistas(area, relato) {
+        function gerarAvaliacoesEspecialistas(area, relato, especialistasArea) {
             const listaEspecialistas = document.getElementById('lista-especialistas');
             listaEspecialistas.innerHTML = "";
             
             let avaliacoes = [];
-            let todosEspecialistas = [...especialistas.juizes, ...especialistas.professores];
             
-            // Gerar avaliações para cada especialista
-            todosEspecialistas.forEach((especialista, index) => {
-                // Gerar nota baseada na especialidade e relevância
+            especialistasArea.forEach((especialista, index) => {
                 let notaBase = Math.floor(Math.random() * 30) + 60;
                 
-                // Ajustar nota baseada na especialidade
-                if (especialista.especialidade.includes(area) || 
-                    (area === "Criminal" && especialista.especialidade.includes("Penal")) ||
-                    (area === "Trabalhista" && especialista.especialidade.includes("Trabalho"))) {
-                    notaBase += 15;
-                }
+                notaBase += 15;
                 
-                // Limitar a 95%
                 const notaFinal = Math.min(notaBase, 95);
-                
-                // Gerar comentário específico
                 const comentario = gerarComentarioEspecialista(especialista, area, relato, notaFinal);
                 
-                // Adicionar à lista de avaliações
                 avaliacoes.push({
                     especialista: especialista.nome,
                     nota: notaFinal,
                     comentario: comentario
                 });
                 
-                // Criar elemento HTML
                 const especialistaHTML = `
                     <div class="especialista-item" style="border-left-color: ${especialista.cor}">
                         <div class="especialista-nome">
@@ -2160,23 +2209,36 @@
         }
         
         function gerarComentarioEspecialista(especialista, area, relato, nota) {
-            const comentariosBase = {
-                juiz: [
-                    "Analisando o caso sob a perspectiva prática da magistratura, observo que há fundamentação sólida para o procedimento.",
-                    "Na minha experiência como magistrado, casos similares apresentam boa perspectiva de sucesso quando devidamente fundamentados.",
-                    "A análise forense demonstra atenção aos requisitos processuais essenciais para o êxito da demanda."
-                ],
-                professor: [
-                    "Do ponto de vista teórico, o caso apresenta coerência com a doutrina majoritária e jurisprudência dominante.",
-                    "A fundamentação jurídica está alinhada com os princípios basilares da disciplina e a evolução doutrinária recente.",
-                    "Considerando os aspectos dogmáticos e hermenêuticos, a abordagem adotada mostra-se academicamente robusta."
-                ]
+            const comentariosJuiz = [
+                "Analisando o caso sob a perspectiva prática da magistratura, observo que há fundamentação sólida para o procedimento.",
+                "Na minha experiência como magistrado, casos similares apresentam boa perspectiva de sucesso quando devidamente fundamentados.",
+                "A análise forense demonstra atenção aos requisitos processuais essenciais para o êxito da demanda."
+            ];
+            
+            const comentariosProfessor = [
+                "Do ponto de vista teórico, o caso apresenta coerência com a doutrina majoritária e jurisprudência dominante.",
+                "A fundamentação jurídica está alinhada com os princípios basilares da disciplina e a evolução doutrinária recente.",
+                "Considerando os aspectos dogmáticos e hermenêuticos, a abordagem adotada mostra-se academicamente robusta."
+            ];
+            
+            const comentariosEspecialista = [
+                "Na minha especialidade, o caso demonstra elementos essenciais para o sucesso da ação proposta.",
+                "A análise técnica revela adequação aos parâmetros jurídicos específicos da área.",
+                "Do ponto de vista prático, as evidências apresentadas suportam a pretensão deduzida."
+            ];
+            
+            let tipo = "especialista";
+            if (especialista.titulo.toLowerCase().includes('juiz')) tipo = "juiz";
+            if (especialista.titulo.toLowerCase().includes('professor')) tipo = "professor";
+            
+            const arraysComentarios = {
+                juiz: comentariosJuiz,
+                professor: comentariosProfessor,
+                especialista: comentariosEspecialista
             };
             
-            const tipo = especialista.titulo.toLowerCase().includes('juiz') ? 'juiz' : 'professor';
-            const comentarioBase = comentariosBase[tipo][Math.floor(Math.random() * comentariosBase[tipo].length)];
+            const comentarioBase = arraysComentarios[tipo][Math.floor(Math.random() * arraysComentarios[tipo].length)];
             
-            // Adicionar observação específica baseada na nota
             let observacao = "";
             if (nota >= 85) {
                 observacao = " A qualidade do caso é excepcional, com grande potencial de sucesso.";
@@ -2186,8 +2248,7 @@
                 observacao = " Sugere-se revisão de alguns aspectos para fortalecer a argumentação.";
             }
             
-            // Adicionar observação sobre mestrado
-            const obsMestrado = ` Minha análise, enquanto ${especialista.mestrado.split('Mestre em ')[1]}, confirma a viabilidade do caso.`;
+            const obsMestrado = ` Como ${especialista.mestrado.split('Mestre em ')[1]}, confirmo a viabilidade técnica do caso.`;
             
             return comentarioBase + observacao + obsMestrado;
         }
@@ -2199,7 +2260,7 @@
             return Math.round(soma / avaliacoes.length);
         }
         
-        function gerarPeticaoPorArea(area, relato, rito, lei) {
+        function gerarPeticaoPorArea(area, relato, estrutura, pontosChave, fundamentos) {
             const editor = document.getElementById('editor-a4');
             let corpoPeticao = "";
             const juizo = document.getElementById('in-juizo').value || "Vara competente da Comarca";
@@ -2207,65 +2268,115 @@
             const valor = document.getElementById('in-valor').value || "Indeterminado";
             const dataAtual = new Date().toLocaleDateString('pt-BR');
             
-            // Adicionar cabeçalho com referência aos especialistas
-            const especialistasTotal = especialistas.juizes.length + especialistas.professores.length;
+            const especialistasArea = especialistasPorArea[area] || especialistasPorArea["Cível"];
             
-            // Gerar petição conforme a área selecionada
             if(area === "Criminal") {
                 corpoPeticao = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DO ${juizo.toUpperCase()}\n\n`
                              + `PROCESSO Nº: ____________\n\n`
-                             + `PETIÇÃO ELABORADA COM BASE NA ANÁLISE CONJUNTA DE ${especialistasTotal} ESPECIALISTAS (${especialistas.juizes.length} JUÍZES E ${especialistas.professores.length} PROFESSORES COM MESTRADO)\n\n`
+                             + `PETIÇÃO ELABORADA COM BASE NA ANÁLISE DE ${especialistasArea.length} ESPECIALISTAS EM DIREITO PENAL\n\n`
                              + `${partes},\n\n`
-                             + `por seu advogado, vem apresentar RESPOSTA À ACUSAÇÃO, com base no disposto no ${lei}, nas razões seguintes:\n\n`
-                             + `I - DOS FATOS:\n${relato}\n\n`
-                             + `II - PRELIMINARES:\nArguem-se as nulidades eventualmente verificadas nos autos, com especial enfoque no cerceamento de defesa e violação ao devido processo legal.\n\n`
-                             + `III - DO MÉRITO:\nPleiteia-se a absolvição sumária do réu ou, alternativamente, a desclassificação do delito para tipo penal menos gravoso, ante a atipicidade da conduta.\n\n`
-                             + `IV - DO PEDIDO:\nDiante do exposto, requer seja o réu absolvido, com a consequente extinção da punibilidade.\n\n`
+                             + `por seu advogado, vem apresentar ${estrutura.toUpperCase()}, com fulcro no ${fundamentos}, nos termos seguintes:\n\n`
+                             + `I - DOS FATOS (conforme Art. 319, I do CPC):\n${relato}\n\n`
+                             + `II - DO DIREITO:\n${pontosChave}. Fundamentação com base no Código Penal e Código de Processo Penal, observando-se os requisitos do Art. 41 do CPP.\n\n`
+                             + `III - DO PEDIDO (conforme Art. 319, III do CPC):\nPleiteia-se a procedência da ${estrutura.toLowerCase()}, com a consequente condenação do réu nas penas cabíveis, além de fixação de reparação de danos.\n\n`
+                             + `Valor da Causa: R$ ${valor}.\n\n`
+                             + `Protesta pela produção de todas as provas admitidas em direito.\n\n`
                              + `Nestes termos,\nPede deferimento.\n\n`
                              + `Local, ${dataAtual}.\n\n`
                              + `_________________________________\n`
                              + `Advogado(a)\n`
                              + `OAB: ____________\n\n`
-                             + `OBSERVAÇÃO: Esta petição foi analisada e aprovada por todos os especialistas da plataforma.`;
+                             + `OBSERVAÇÃO: Esta petição segue a estrutura padrão para ações criminais, conforme análise dos especialistas.`;
                              
             } else if (area === "Trabalhista") {
                 corpoPeticao = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DO TRABALHO DA ${juizo.toUpperCase()}\n\n`
                              + `RECLAMAÇÃO TRABALHISTA Nº: ____________\n\n`
-                             + `DOCUMENTO REVISADO POR ${especialistasTotal} ESPECIALISTAS (INCLUINDO ${especialistas.juizes.length} JUÍZES TRABALHISTAS E ${especialistas.professores.length} PROFESSORES COM MESTRADO)\n\n`
+                             + `DOCUMENTO REVISADO POR ${especialistasArea.length} ESPECIALISTAS EM DIREITO DO TRABALHO\n\n`
                              + `${partes},\n\n`
-                             + `por seu advogado, vem propor a presente ${rito.toUpperCase()}, com fulcro no ${lei}, nos termos seguintes:\n\n`
-                             + `I - DOS FATOS:\n${relato}\n\n`
-                             + `II - DO DIREITO:\nFundamentação específica conforme Consolidação das Leis do Trabalho e jurisprudência dominante do TST, com atenção à Reforma Trabalhista (Lei 13.467/2017).\n\n`
-                             + `III - DOS PEDIDOS:\nRequer a condenação do réu ao pagamento das verbas rescisórias, com os acréscimos legais, além de honorários advocatícios.\n\n`
-                             + `VALOR DA CAUSA: R$ ${valor}.\n\n`
+                             + `por seu advogado, vem propor a presente ${estrutura.toUpperCase()}, com fulcro no ${fundamentos}, nos termos seguintes:\n\n`
+                             + `I - DOS FATOS (conforme Art. 840, §1º da CLT):\n${relato}\n\n`
+                             + `II - DO DIREITO:\n${pontosChave}. Todos os valores devem ser calculados com precisão, incluindo horas extras, reflexos e multas.\n\n`
+                             + `III - DOS PEDIDOS:\nRequer a condenação do réu ao pagamento das verbas rescisórias discriminadas, com acréscimos legais, além de honorários advocatícios de 15%.\n\n`
+                             + `Valor da Causa: R$ ${valor}.\n\n`
+                             + `Protesta pela realização de perícia contábil quando necessário.\n\n`
                              + `Nestes termos,\nPede deferimento.\n\n`
                              + `Local, ${dataAtual}.\n\n`
                              + `_________________________________\n`
                              + `Advogado(a)\n`
                              + `OAB: ____________\n\n`
-                             + `AVALIAÇÃO MULTIDISCIPLINAR: O caso recebeu aprovação unânime dos especialistas.`;
+                             + `AVALIAÇÃO: O caso recebeu aprovação dos especialistas trabalhistas.`;
                              
+            } else if (area === "Família") {
+                corpoPeticao = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA VARA DE FAMÍLIA E SUCESSÕES DO ${juizo.toUpperCase()}\n\n`
+                             + `PROCESSO Nº: ____________\n\n`
+                             + `PETIÇÃO ANALISADA POR ${especialistasArea.length} ESPECIALISTAS EM DIREITO DE FAMÍLIA\n\n`
+                             + `${partes},\n\n`
+                             + `por seu advogado, vem propor a presente ${estrutura.toUpperCase()}, com fundamento no ${fundamentos}, pelas razões a seguir expostas:\n\n`
+                             + `I - DOS FATOS:\n${relato}\n\n`
+                             + `II - DO DIREITO:\n${pontosChave}. Aplicação do Código Civil, Lei do Divórcio, Estatuto da Criança e do Adolescente e jurisprudência específica do STJ.\n\n`
+                             + `III - DOS PEDIDOS:\nRequer a fixação de alimentos provisórios, ofício à entidade empregadora para desconto em folha, e demais medidas pertinentes ao caso.\n\n`
+                             + `Valor da Causa: R$ ${valor} (12 vezes o valor mensal pedido).\n\n`
+                             + `Nestes termos,\nPede deferimento.\n\n`
+                             + `Local, ${dataAtual}.\n\n`
+                             + `_________________________________\n`
+                             + `Advogado(a)\n`
+                             + `OAB: ____________\n\n`
+                             + `CERTIFICAÇÃO: Documento revisado e aprovado pelo corpo técnico especializado em Direito de Família.`;
+                             
+            } else if (area === "Consumidor") {
+                corpoPeticao = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DO ${juizo.toUpperCase()}\n\n`
+                             + `PROCESSO Nº: ____________\n\n`
+                             + `PETIÇÃO ANALISADA POR ${especialistasArea.length} ESPECIALISTAS EM DIREITO DO CONSUMIDOR\n\n`
+                             + `${partes},\n\n`
+                             + `por seu advogado, vem propor a presente ${estrutura.toUpperCase()}, com fundamento no ${fundamentos}, pelas razões a seguir expostas:\n\n`
+                             + `I - DOS FATOS:\n${relato}\n\n`
+                             + `II - DO DIREITO:\n${pontosChave}. Aplicação do Código de Defesa do Consumidor (Lei 8.078/90), com ênfase nos arts. 6º, VIII e 42, parágrafo único.\n\n`
+                             + `III - DOS PEDIDOS:\nRequer a condenação do réu ao cumprimento da obrigação ou à devolução em dobro do valor pago, além de danos morais quando cabíveis.\n\n`
+                             + `Valor da Causa: R$ ${valor}.\n\n`
+                             + `Nestes termos,\nPede deferimento.\n\n`
+                             + `Local, ${dataAtual}.\n\n`
+                             + `_________________________________\n`
+                             + `Advogado(a)\n`
+                             + `OAB: ____________\n\n`
+                             + `CERTIFICAÇÃO: Esta petição segue os parâmetros do CDC, conforme análise especializada.`;
+                             
+            } else if (area === "Previdenciário") {
+                corpoPeticao = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ FEDERAL DO ${juizo.toUpperCase()}\n\n`
+                             + `PROCESSO Nº: ____________\n\n`
+                             + `PETIÇÃO ANALISADA POR ${especialistasArea.length} ESPECIALISTAS EM DIREITO PREVIDENCIÁRIO\n\n`
+                             + `${partes},\n\n`
+                             + `por seu advogado, vem propor a presente ${estrutura.toUpperCase()}, com fundamento no ${fundamentos}, pelas razões a seguir expostas:\n\n`
+                             + `I - DOS FATOS:\n${relato}\n\n`
+                             + `II - DO DIREITO:\n${pontosChave}. Necessidade de comprovação do tempo de contribuição ou da incapacidade laborativa, conforme o caso.\n\n`
+                             + `III - DOS PEDIDOS:\nRequer a concessão do benefício administrativamente negado, com pagamento retroativo desde a data do requerimento administrativo (DER).\n\n`
+                             + `Valor da Causa: R$ ${valor}.\n\n`
+                             + `Requer a realização de perícia médica judicial quando for o caso.\n\n`
+                             + `Nestes termos,\nPede deferimento.\n\n`
+                             + `Local, ${dataAtual}.\n\n`
+                             + `_________________________________\n`
+                             + `Advogado(a)\n`
+                             + `OAB: ____________\n\n`
+                             + `CERTIFICAÇÃO: Análise técnica previdenciária realizada por especialistas.`;
             } else {
                 corpoPeticao = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DO ${juizo.toUpperCase()}\n\n`
                              + `AUTOS Nº: ____________\n\n`
-                             + `PETIÇÃO ANALISADA POR TODOS OS ESPECIALISTAS DA PLATAFORMA (${especialistasTotal} AVALIADORES)\n\n`
+                             + `PETIÇÃO ANALISADA POR ${especialistasArea.length} ESPECIALISTAS EM DIREITO CÍVEL\n\n`
                              + `${partes},\n\n`
-                             + `por seu advogado, vem propor a presente ${rito.toUpperCase()}, com fundamento no ${lei}, pelas razões a seguir expostas:\n\n`
-                             + `I - DOS FATOS:\n${relato}\n\n`
-                             + `II - DO DIREITO:\nAplicação da legislação material pertinente, com suporte na jurisprudência dos Tribunais Superiores.\n\n`
-                             + `III - DOS PEDIDOS:\nRequer a procedência do pedido, condenação da parte ré nos honorários advocatícios e custas processuais.\n\n`
-                             + `VALOR DA CAUSA: R$ ${valor}.\n\n`
+                             + `por seu advogado, vem propor a presente ${estrutura.toUpperCase()}, com fundamento no ${fundamentos}, pelas razões a seguir expostas:\n\n`
+                             + `I - DOS FATOS (conforme Art. 319, I do CPC):\n${relato}\n\n`
+                             + `II - DO DIREITO:\n${pontosChave}. Aplicação das normas de responsabilidade civil e obrigações, com observância dos requisitos do ato ilícito.\n\n`
+                             + `III - DOS PEDIDOS (conforme Art. 319, III do CPC):\nRequer a procedência do pedido, condenação da parte ré ao pagamento de danos materiais e morais, além de honorários advocatícios.\n\n`
+                             + `Valor da Causa: R$ ${valor}.\n\n`
                              + `Nestes termos,\nPede deferimento.\n\n`
                              + `Local, ${dataAtual}.\n\n`
                              + `_________________________________\n`
                              + `Advogado(a)\n`
                              + `OAB: ____________\n\n`
-                             + `CERTIFICAÇÃO: Documento revisado e aprovado pelo corpo técnico completo.`;
+                             + `CERTIFICAÇÃO: Documento revisado e aprovado pelo corpo técnico especializado.`;
             }
             
             editor.innerHTML = corpoPeticao;
             
-            // Ajustar scroll para mobile
             if (isMobileDevice()) {
                 setTimeout(() => {
                     editor.scrollTop = 0;
@@ -2273,25 +2384,25 @@
             }
         }
         
-        function atualizarVadeMecum(area) {
+        function atualizarVadeMecum(area, fundamentos) {
             const vadeContent = document.getElementById('vade-resultado');
             let conteudo = "";
             
             if (area === "Criminal") {
-                conteudo = `<p>Com base na análise multidisciplinar do caso criminal, as seguintes disposições legais são aplicáveis:</p>
+                conteudo = `<p>Com base na análise especializada do caso criminal, as seguintes disposições legais são aplicáveis:</p>
                           <ul style="margin-top: 15px; padding-left: 20px;">
+                            <li><strong>Código Penal - Art. 100, § 2º:</strong> Ação penal privada.</li>
+                            <li><strong>Código de Processo Penal - Arts. 30 a 62:</strong> Procedimento da ação penal privada.</li>
+                            <li><strong>CPP - Art. 41:</strong> Requisitos da queixa-crime.</li>
                             <li><strong>CPP - Art. 396-A:</strong> Resposta à acusação no rito do júri.</li>
-                            <li><strong>CPP - Art. 413:</strong> Pronúncia e seus requisitos.</li>
-                            <li><strong>CPP - Arts. 563 a 593:</strong> Rito do Tribunal do Júri.</li>
-                            <li><strong>CPP - Art. 3º:</strong> Princípio do devido processo legal.</li>
                             <li><strong>Constituição Federal - Art. 5º, XXXVII:</strong> Juízo natural.</li>
                             <li><strong>Constituição Federal - Art. 5º, LV:</strong> Contraditório e ampla defesa.</li>
                           </ul>
                           <p style="margin-top: 20px; color: var(--accent); font-weight: 600;">
-                            <i class="fas fa-lightbulb"></i> DICA: Esta análise foi validada por ${especialistas.juizes.length} juízes e ${especialistas.professores.length} professores com mestrado.
+                            <i class="fas fa-lightbulb"></i> DICA: A queixa-crime deve ser apresentada no prazo decadencial de 6 meses.
                           </p>`;
             } else if (area === "Trabalhista") {
-                conteudo = `<p>Com base na análise multidisciplinar do caso trabalhista, as seguintes disposições legais são aplicáveis:</p>
+                conteudo = `<p>Com base na análise especializada do caso trabalhista, as seguintes disposições legais são aplicáveis:</p>
                           <ul style="margin-top: 15px; padding-left: 20px;">
                             <li><strong>CLT - Art. 840, §1º:</strong> Conteúdo da reclamação trabalhista.</li>
                             <li><strong>Lei 13.467/2017:</strong> Reforma Trabalhista.</li>
@@ -2301,34 +2412,62 @@
                             <li><strong>Constituição Federal - Art. 7º:</strong> Direitos dos trabalhadores urbanos e rurais.</li>
                           </ul>
                           <p style="margin-top: 20px; color: var(--accent); font-weight: 600;">
-                            <i class="fas fa-lightbulb"></i> DICA: A análise foi revisada por juízes trabalhistas e professores com mestrado na área.
+                            <i class="fas fa-lightbulb"></i> DICA: Na Justiça do Trabalho, todos os valores devem ser calculados com precisão na inicial.
+                          </p>`;
+            } else if (area === "Família") {
+                conteudo = `<p>Com base na análise especializada do caso de família, as seguintes disposições legais são aplicáveis:</p>
+                          <ul style="margin-top: 15px; padding-left: 20px;">
+                            <li><strong>Lei 13.105/2015 (CPC) - Art. 319:</strong> Requisitos da petição inicial.</li>
+                            <li><strong>Lei 13.105/2015 (CPC) - Art. 733:</strong> Procedimentos especiais de família.</li>
+                            <li><strong>Lei 6.515/1977:</strong> Lei do Divórcio.</li>
+                            <li><strong>Código Civil - Arts. 1.511 a 1.783:</strong> Direito de Família.</li>
+                            <li><strong>Lei 8.069/1990 (ECA):</strong> Estatuto da Criança e do Adolescente.</li>
+                            <li><strong>Constituição Federal - Art. 226:</strong> Proteção à família.</li>
+                          </ul>
+                          <p style="margin-top: 20px; color: var(--accent); font-weight: 600;">
+                            <i class="fas fa-lightbulb"></i> DICA: Ação de alimentos deve observar o binômio necessidade-possibilidade.
+                          </p>`;
+            } else if (area === "Consumidor") {
+                conteudo = `<p>Com base na análise especializada do caso consumerista, as seguintes disposições legais são aplicáveis:</p>
+                          <ul style="margin-top: 15px; padding-left: 20px;">
+                            <li><strong>Lei 8.078/1990 (CDC) - Art. 6º, VIII:</strong> Inversão do ônus da prova.</li>
+                            <li><strong>CDC - Art. 42, parágrafo único:</strong> Repetição do indébito em dobro.</li>
+                            <li><strong>CDC - Art. 18:</strong> Responsabilidade por vício do produto.</li>
+                            <li><strong>CDC - Art. 14:</strong> Responsabilidade por fato do produto.</li>
+                            <li><strong>CPC/2015 - Art. 319:</strong> Requisitos da petição inicial.</li>
+                            <li><strong>Constituição Federal - Art. 5º, XXXII:</strong> Defesa do consumidor.</li>
+                          </ul>
+                          <p style="margin-top: 20px; color: var(--accent); font-weight: 600;">
+                            <i class="fas fa-lightbulb"></i> DICA: No direito do consumidor, aplica-se a inversão do ônus da prova.
                           </p>`;
             } else {
-                conteudo = `<p>Com base na análise multidisciplinar do caso cível, as seguintes disposições legais são aplicáveis:</p>
+                conteudo = `<p>Com base na análise especializada do caso cível, as seguintes disposições legais são aplicáveis:</p>
                           <ul style="margin-top: 15px; padding-left: 20px;">
                             <li><strong>CPC/2015 - Art. 319:</strong> Conteúdo da petição inicial.</li>
                             <li><strong>CPC/2015 - Art. 322:</strong> Improcedência liminar do pedido.</li>
                             <li><strong>CPC/2015 - Art. 333:</strong> Ônus da prova.</li>
-                            <li><strong>Lei 8.078/1990 (CDC):</strong> Se for caso de consumo.</li>
+                            <li><strong>Código Civil - Art. 186:</strong> Ato ilícito.</li>
+                            <li><strong>Código Civil - Art. 927:</strong> Obrigação de reparar o dano.</li>
                             <li><strong>Constituição Federal - Art. 5º, XXXV:</strong> Inafastabilidade da jurisdição.</li>
-                            <li><strong>Constituição Federal - Art. 5º, LIV:</strong> Devido processo legal.</li>
                           </ul>
                           <p style="margin-top: 20px; color: var(--accent); font-weight: 600;">
-                            <i class="fas fa-lightbulb"></i> DICA: Todas as análises são validadas pelo conjunto completo de especialistas da plataforma.
+                            <i class="fas fa-lightbulb"></i> DICA: Na ação de indenização, é essencial demonstrar o nexo de causalidade.
                           </p>`;
             }
             
             vadeContent.innerHTML = conteudo;
         }
         
-        // FUNÇÕES DO MODELO EM BRANCO COM SELEÇÃO DE ÁREA
+        // ==============================================
+        // MODELO EM BRANCO POR ÁREA
+        // ==============================================
+        
         let timeoutPesquisa;
         
         function abrirModalAreaBranco() {
             document.getElementById('modal-area-branco').style.display = 'block';
             document.querySelector('.overlay').style.display = 'block';
             
-            // Ajustar para mobile
             if (isMobileDevice()) {
                 const modal = document.getElementById('modal-area-branco');
                 modal.scrollTop = 0;
@@ -2348,32 +2487,55 @@
         function gerarModeloEmBrancoPorArea(area) {
             const editor = document.getElementById('editor-a4');
             const dataAtual = new Date().toLocaleDateString('pt-BR');
-            let modelo = "";
+            let estrutura = "Petição Inicial";
+            let pontosChave = "Descrever os fatos com clareza e precisão";
+            let fundamentos = "Art. 319 do CPC/2015";
             
-            const especialistasTotal = especialistas.juizes.length + especialistas.professores.length;
+            if (area === "Criminal") {
+                estrutura = "Queixa-Crime";
+                pontosChave = "Prazo decadencial de 6 meses. Descrição detalhada do fato criminoso.";
+                fundamentos = "Art. 100, § 2º do CP e Art. 30 e seguintes do CPP";
+            } else if (area === "Trabalhista") {
+                estrutura = "Reclamação Trabalhista";
+                pontosChave = "Cálculo preciso de todas as verbas rescisórias. Datas exatas de admissão e demissão.";
+                fundamentos = "CLT e Constituição Federal (Art. 7º)";
+            } else if (area === "Família") {
+                estrutura = "Ação de Alimentos";
+                pontosChave = "Binômio necessidade-possibilidade. Comprovação dos gastos mensais.";
+                fundamentos = "Lei 5.478/68 e Código Civil";
+            } else if (area === "Consumidor") {
+                estrutura = "Ação do Consumidor";
+                pontosChave = "Inversão do ônus da prova. Descrição do produto/serviço defeituoso.";
+                fundamentos = "Código de Defesa do Consumidor (CDC)";
+            } else if (area === "Previdenciário") {
+                estrutura = "Concessão de Benefício";
+                pontosChave = "Prévio indeferimento administrativo. Comprovação do tempo de contribuição.";
+                fundamentos = "Lei 8.213/91";
+            }
             
-            // Gerar modelo conforme a área selecionada, COM REFERÊNCIA A TODOS OS ESPECIALISTAS
-            modelo = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA __________________________\n\n`
-                   + `PROCESSO Nº: _______________________\n\n`
-                   + `MODELO ELABORADO E VALIDADO POR TODOS OS ESPECIALISTAS DA PLATAFORMA\n`
-                   + `(${especialistas.juizes.length} JUÍZES E ${especialistas.professores.length} PROFESSORES COM MESTRADO)\n\n`
-                   + `__________________________ (qualificação completa),\n`
-                   + `por seu advogado (qualificação e endereço para intimações), vem propor a presente AÇÃO, nos termos seguintes:\n\n`
-                   + `I - DOS FATOS:\n[Descreva com clareza e precisão os fatos relevantes para o caso, em ordem cronológica. Este modelo foi aprovado por todos os juízes e professores com mestrado.]\n\n`
-                   + `II - DO DIREITO:\n[Fundamentação jurídica pertinente, com citação de leis, doutrina e jurisprudência específicas da área do ${area}. Revisada por especialistas com mestrado na área.]\n\n`
-                   + `III - DOS PEDIDOS:\n[Especificar de forma clara e completa todos os pedidos próprios da área do ${area}.]\n\n`
-                   + `Valor da Causa: R$ ______________\n\n`
-                   + `Nestes termos,\nPede deferimento.\n\n`
-                   + `Local, ${dataAtual}.\n\n`
-                   + `_________________________________\n`
-                   + `Advogado(a)\n`
-                   + `OAB: ____________\n\n`
-                   + `CERTIFICAÇÃO: Este modelo segue os padrões validados pelo corpo técnico completo da Inteligência Forense Pro.`;
+            const especialistasArea = especialistasPorArea[area] || especialistasPorArea["Cível"];
+            
+            const modelo = `EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA __________________________\n\n`
+                         + `PROCESSO Nº: _______________________\n\n`
+                         + `MODELO DE ${estrutura.toUpperCase()} - ÁREA: ${area.toUpperCase()}\n`
+                         + `ELABORADO COM BASE NA ESTRUTURA ESPECÍFICA DA ÁREA\n\n`
+                         + `__________________________ (qualificação completa do autor),\n`
+                         + `por seu advogado (qualificação e endereço para intimações), vem propor a presente ${estrutura.toUpperCase()}, com fundamento no ${fundamentos}, nos termos seguintes:\n\n`
+                         + `I - DOS FATOS (conforme Art. 319, I do CPC):\n[${pontosChave}. Descreva os fatos relevantes em ordem cronológica, com precisão de datas, valores e pessoas envolvidas.]\n\n`
+                         + `II - DO DIREITO:\n[Fundamentação jurídica específica da área do ${area}. Cite leis, doutrina e jurisprudência pertinentes. ${area === "Consumidor" ? "Lembre-se da inversão do ônus da prova (Art. 6º, VIII do CDC)." : ""}]\n\n`
+                         + `III - DOS PEDIDOS (conforme Art. 319, III do CPC):\n[Especifique de forma clara e completa todos os pedidos. ${area === "Trabalhista" ? "Inclua cálculo detalhado das verbas." : area === "Família" ? "Solicite alimentos provisórios se for o caso." : ""}]\n\n`
+                         + `Valor da Causa: R$ ______________\n\n`
+                         + `Protesta pela produção de todas as provas admitidas em direito.\n\n`
+                         + `Nestes termos,\nPede deferimento.\n\n`
+                         + `Local, ${dataAtual}.\n\n`
+                         + `_________________________________\n`
+                         + `Advogado(a)\n`
+                         + `OAB: ____________\n\n`
+                         + `CERTIFICAÇÃO: Este modelo segue a estrutura específica da área do ${area}, conforme análise de ${especialistasArea.length} especialistas.`;
             
             editor.innerHTML = modelo;
-            mostrarNotificacao(`Modelo em branco da área ${area} validado por todos os ${especialistasTotal} especialistas!`, "success");
+            mostrarNotificacao(`Modelo ${area} gerado com estrutura específica da área!`, "success");
             
-            // Ajustar scroll para mobile
             if (isMobileDevice()) {
                 setTimeout(() => {
                     editor.scrollTop = 0;
@@ -2381,9 +2543,11 @@
             }
         }
         
-        // DICIONÁRIO AURÉLIO COMPLETO - AGORA COM RESULTADO PARA TUDO
+        // ==============================================
+        // DICIONÁRIO AURÉLIO
+        // ==============================================
+        
         let dicionarioAurelioCompleto = {
-            // Palavras jurídicas
             "ab initio": {
                 palavra: "ab initio",
                 classe: "locução latina",
@@ -2413,18 +2577,15 @@
                 classe: "substantivo masculino",
                 definicoes: ["Conjunto de normas que regulam as relações sociais, garantindo a ordem e a justiça.", "Ciência que estude as leis e sua aplicação na sociedade.", "Faculdade legal de agir ou exigir algo."],
                 exemplo: "O <strong>direito</strong> à defesa é garantido pela Constituição Federal."
-            },
-            // ... (mantido o dicionário existente)
+            }
         };
         
-        // FUNÇÕES DO DICIONÁRIO AURÉLIO
         function abrirDicionario() {
             document.getElementById('modal-dicionario').style.display = 'block';
             document.querySelector('.overlay').style.display = 'block';
             document.getElementById('dicionario-input').focus();
             mostrarExemplosDicionario();
             
-            // Ajustar para mobile
             if (isMobileDevice()) {
                 const modal = document.getElementById('modal-dicionario');
                 modal.scrollTop = 0;
@@ -2452,12 +2613,9 @@
                 return;
             }
             
-            // Mostrar loading
             resultado.innerHTML = '<p style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Consultando Dicionário Aurélio atualizado...</p>';
             
-            // Simular tempo de consulta
             setTimeout(() => {
-                // Buscar palavra exata primeiro
                 let resultadoExato = null;
                 for (const key in dicionarioAurelioCompleto) {
                     if (key === palavra || dicionarioAurelioCompleto[key].palavra.toLowerCase() === palavra) {
@@ -2466,7 +2624,6 @@
                     }
                 }
                 
-                // Se não encontrar exato, buscar palavras que contenham o termo
                 let resultadosRelacionados = [];
                 if (!resultadoExato) {
                     for (const key in dicionarioAurelioCompleto) {
@@ -2481,7 +2638,6 @@
                 let resultadoHTML = "";
                 
                 if (resultadoExato) {
-                    // Mostrar resultado exato
                     const dado = resultadoExato;
                     const borderColors = ['#3498db', '#e74c3c', '#2ecc71', '#9b59b6', '#f39c12'];
                     resultadoHTML = `
@@ -2501,7 +2657,6 @@
                         </div>
                     `;
                 } else if (resultadosRelacionados.length > 0) {
-                    // Mostrar resultados relacionados
                     const borderColors = ['#3498db', '#e74c3c', '#2ecc71', '#9b59b6', '#f39c12'];
                     
                     resultadosRelacionados.slice(0, 3).forEach((dado, index) => {
@@ -2531,13 +2686,11 @@
                         `;
                     }
                 } else {
-                    // Se não encontrar nada, criar resultado automático
                     resultadoHTML = criarResultadoAutomatico(palavra);
                 }
                 
                 resultado.innerHTML = resultadoHTML;
                 
-                // Ajustar scroll para mobile
                 if (isMobileDevice()) {
                     resultado.scrollTop = 0;
                 }
@@ -2545,19 +2698,16 @@
         }
         
         function criarResultadoAutomatico(palavra) {
-            // Gerar definição automática para qualquer palavra
             const primeiraLetra = palavra.charAt(0).toUpperCase();
             const restoPalavra = palavra.slice(1);
             const palavraFormatada = primeiraLetra + restoPalavra;
             
-            // Gerar definições criativas
             const definicoes = [
                 `Termo que se refere a ${palavraFormatada.toLowerCase()}, utilizado em diversos contextos da língua portuguesa.`,
                 `Conceito que abrange diferentes significados dependendo do contexto em que é empregado.`,
                 `Palavra de origem etimológica variada, adaptada ao uso contemporâneo do português brasileiro.`
             ];
             
-            // Gerar exemplo criativo
             const exemplos = [
                 `O conceito de <strong>${palavraFormatada.toLowerCase()}</strong> é fundamental para compreender diversos aspectos da realidade.`,
                 `Na linguagem cotidiana, <strong>${palavraFormatada.toLowerCase()}</strong> assume diferentes conotações e significados.`,
@@ -2625,14 +2775,16 @@
             resultado.innerHTML = resultadoHTML;
         }
         
-        // FUNÇÕES DO TRABALHO ACADÊMICO COM TODOS OS ESPECIALISTAS
+        // ==============================================
+        // TRABALHO ACADÊMICO
+        // ==============================================
+        
         function abrirTrabalhoAcademico() {
             document.getElementById('modal-academico').style.display = 'block';
             document.querySelector('.overlay').style.display = 'block';
             document.getElementById('academic-result-container').classList.add('hidden');
             document.getElementById('btn-copiar-trabalho').classList.add('hidden');
             
-            // Ajustar para mobile
             if (isMobileDevice()) {
                 const modal = document.getElementById('modal-academico');
                 modal.scrollTop = 0;
@@ -2644,7 +2796,7 @@
             document.querySelector('.overlay').style.display = 'none';
         }
         
-        function gerarTrabalhoAcademicoComTodosEspecialistas() {
+        function gerarTrabalhoAcademicoComEspecialistas() {
             const materia = document.getElementById('acad-materia').value.trim();
             const tema = document.getElementById('acad-tema').value.trim();
             const aluno = document.getElementById('acad-aluno').value.trim();
@@ -2655,10 +2807,8 @@
                 return;
             }
             
-            const totalEspecialistas = especialistas.juizes.length + especialistas.professores.length;
-            mostrarNotificacao(`Todos os ${totalEspecialistas} especialistas estão elaborando seu trabalho acadêmico completo com capa e contracapa...`, "info");
+            mostrarNotificacao(`Especialistas da área estão elaborando seu trabalho acadêmico completo com capa e contracapa...`, "info");
             
-            // Simular processamento
             setTimeout(() => {
                 const paginas = document.getElementById('acad-paginas').value || "15";
                 const formato = document.getElementById('acad-formato').value;
@@ -2666,17 +2816,18 @@
                 const prazo = document.getElementById('acad-prazo').value || "Indeterminado";
                 const dataAtual = new Date().toLocaleDateString('pt-BR');
                 
-                // Gerar trabalho acadêmico COMPLETO COM CAPA E CONTRACAPA
                 const titulo = tema.toUpperCase();
                 const tipoTrabalho = tipo.charAt(0).toUpperCase() + tipo.slice(1);
                 
-                // Selecionar especialistas relevantes para a matéria
-                const especialistasRelevantes = [...especialistas.professores].filter(p => 
-                    p.especialidade.toLowerCase().includes(materia.toLowerCase().split(' ')[0]) ||
-                    materia.toLowerCase().includes(p.especialidade.toLowerCase().split(' ')[0])
-                ).slice(0, 3);
+                let areaMateria = "Cível";
+                if (materia.includes("Penal")) areaMateria = "Criminal";
+                if (materia.includes("Trabalho")) areaMateria = "Trabalhista";
+                if (materia.includes("Família")) areaMateria = "Família";
+                if (materia.includes("Consumidor")) areaMateria = "Consumidor";
+                if (materia.includes("Previdenciário")) areaMateria = "Previdenciário";
                 
-                const nomesEspecialistas = especialistasRelevantes.map(e => e.nome).join(', ');
+                const especialistasArea = especialistasPorArea[areaMateria] || especialistasPorArea["Cível"];
+                const nomesEspecialistas = especialistasArea.map(e => e.nome).join(', ');
                 
                 const conteudo = `
                     <!-- CAPA -->
@@ -2696,7 +2847,7 @@
                             <div style="font-size: 12pt;"><strong>MATRÍCULA:</strong> ${ra || "Não informada"}</div>
                             <div style="font-size: 12pt;"><strong>DISCIPLINA:</strong> ${materia}</div>
                             <div style="font-size: 12pt;"><strong>EQUIPE DE ORIENTAÇÃO:</strong> ${nomesEspecialistas}</div>
-                            <div style="font-size: 12pt;"><strong>CONSULTORES TÉCNICOS:</strong> Todos os Juízes da página (${especialistas.juizes.length} magistrados)</div>
+                            <div style="font-size: 12pt;"><strong>ÁREA DO DIREITO:</strong> ${areaMateria}</div>
                         </div>
                         
                         <div style="margin-top: 60px; font-size: 12pt;">
@@ -2719,12 +2870,12 @@
                         <div style="text-align: center; margin-top: 60px;">
                             <div style="font-size: 12pt;">${tipoTrabalho} apresentado ao Curso de Direito da Universidade Federal do Direito</div>
                             <div style="font-size: 12pt;">como requisito parcial para obtenção do grau de Bacharel em Direito</div>
-                            <div style="font-size: 12pt;">na disciplina de ${materia}.</div>
+                            <div style="font-size: 12pt;">na disciplina de ${materia} (Área: ${areaMateria}).</div>
                         </div>
                         
                         <div style="text-align: center; margin-top: 80px;">
-                            <div style="font-size: 12pt;"><strong>ORIENTAÇÃO COLETIVA:</strong> Equipe de ${totalEspecialistas} especialistas</div>
-                            <div style="font-size: 10pt; margin-top: 5px;">Inclui ${especialistas.juizes.length} magistrados e ${especialistas.professores.length} professores com mestrado</div>
+                            <div style="font-size: 12pt;"><strong>ORIENTAÇÃO COLETIVA:</strong> Equipe de ${especialistasArea.length} especialistas em ${areaMateria}</div>
+                            <div style="font-size: 10pt; margin-top: 5px;">Todos com mestrado ou experiência comprovada na área</div>
                         </div>
                         
                         <div style="text-align: center; margin-top: 60px; font-size: 12pt;">
@@ -2733,108 +2884,57 @@
                         </div>
                     </div>
                     
-                    <!-- PREFÁCIO COM TODOS OS ESPECIALISTAS -->
+                    <!-- PREFÁCIO COM ESPECIALISTAS DA ÁREA -->
                     <div class="academic-section" style="page-break-before: always;">
                         <div class="academic-subtitle" style="text-align: center;">PREFÁCIO</div>
                         
-                        <p>Este trabalho foi elaborado com a colaboração técnica de todos os especialistas da plataforma Inteligência Forense Pro:</p>
+                        <p>Este trabalho foi elaborado com a colaboração técnica de especialistas em ${areaMateria} da plataforma Inteligência Forense Pro:</p>
                         
                         <ul>
-                            <li><strong>Juízes:</strong> ${especialistas.juizes.map(j => j.nome).join(', ')}</li>
-                            <li><strong>Professores com Mestrado:</strong> ${especialistas.professores.map(p => p.nome).join(', ')}</li>
+                            ${especialistasArea.map(e => `<li><strong>${e.nome}:</strong> ${e.titulo} | ${e.mestrado}</li>`).join('')}
                         </ul>
                         
-                        <p>Cada especialista contribuiu com sua perspectiva única, combinando experiência prática da magistratura com rigor acadêmico, garantindo assim a excelência deste trabalho.</p>
-                    </div>
-                    
-                    <!-- SUMÁRIO -->
-                    <div class="academic-section" style="page-break-before: always;">
-                        <div class="academic-subtitle" style="text-align: center;">SUMÁRIO</div>
-                        
-                        <div style="margin-top: 20px;">
-                            <p>1 INTRODUÇÃO ...................................................................................... 3</p>
-                            <p>2 FUNDAMENTAÇÃO TEÓRICA .......................................................... 5</p>
-                            <p>3 METODOLOGIA ................................................................................. 8</p>
-                            <p>4 ANÁLISE E DISCUSSÃO .................................................................... 10</p>
-                            <p>5 CONCLUSÃO .................................................................................... 13</p>
-                            <p>6 AVALIAÇÃO DOS ESPECIALISTAS .................................................... 15</p>
-                            <p>REFERÊNCIAS .................................................................................... 17</p>
-                            <p>ANEXOS .............................................................................................. 19</p>
-                        </div>
-                    </div>
-                    
-                    <!-- INTRODUÇÃO -->
-                    <div class="academic-section" style="page-break-before: always;">
-                        <div class="academic-subtitle">1 INTRODUÇÃO</div>
-                        <p>Este trabalho, elaborado com a supervisão coletiva de ${totalEspecialistas} especialistas em direito, tem como objetivo analisar criticamente o tema "${tema}" no âmbito da disciplina ${materia}. A abordagem multidisciplinar combina perspectivas práticas da magistratura com rigor teórico acadêmico.</p>
-                        
-                        <p>A metodologia inclui análise dogmática, pesquisa bibliográfica, estudo de casos paradigmáticos e contribuições específicas de cada especialista, sempre com rigor científico e respeito às normas acadêmicas.</p>
+                        <p>Cada especialista contribuiu com sua perspectiva específica da área, combinando experiência prática com rigor acadêmico, garantindo assim a excelência e precisão deste trabalho na disciplina de ${materia}.</p>
                     </div>
                     
                     <!-- SEÇÃO DE AVALIAÇÃO DOS ESPECIALISTAS -->
                     <div class="academic-section" style="page-break-before: always;">
-                        <div class="academic-subtitle">6 AVALIAÇÃO DOS ESPECIALISTAS</div>
-                        <p>Este trabalho recebeu avaliação completa de todos os especialistas da plataforma:</p>
+                        <div class="academic-subtitle">AVALIAÇÃO DOS ESPECIALISTAS EM ${areaMateria.toUpperCase()}</div>
+                        <p>Este trabalho recebeu avaliação completa dos especialistas da área:</p>
                         
                         <div style="margin-top: 20px;">
-                            ${especialistas.juizes.map(juiz => `
-                                <p><strong>${juiz.nome}</strong> (${juiz.titulo}): "${gerarComentarioAvaliacao(juiz, materia)}"</p>
-                            `).join('')}
-                            
-                            ${especialistas.professores.map(prof => `
-                                <p><strong>${prof.nome}</strong> (${prof.titulo}): "${gerarComentarioAvaliacao(prof, materia)}"</p>
+                            ${especialistasArea.map(especialista => `
+                                <p><strong>${especialista.nome}</strong> (${especialista.titulo}): "${gerarComentarioAvaliacaoAcademica(especialista, materia)}"</p>
                             `).join('')}
                         </div>
                         
                         <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.1); border-radius: 8px;">
-                            <p><strong>NOTA FINAL CONSENSUS:</strong> 9.5/10.0</p>
-                            <p><strong>OBSERVAÇÃO:</strong> Trabalho aprovado por unanimidade por todos os ${totalEspecialistas} especialistas.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- CONTRACAPA -->
-                    <div class="academic-back-cover">
-                        <div style="font-size: 14pt; font-weight: bold; margin-bottom: 30px;">CERTIFICAÇÃO DE QUALIDADE</div>
-                        
-                        <div style="text-align: center; margin: 30px 0; padding: 20px; border: 2px solid var(--accent); border-radius: 8px;">
-                            <p>Este trabalho foi elaborado e validado pelo sistema completo de especialistas da</p>
-                            <p style="font-weight: bold; font-size: 16pt; color: var(--accent);">INTELIGÊNCIA FORENSE PRO</p>
-                            <p>Plataforma certificada por ${totalEspecialistas} especialistas em direito</p>
-                        </div>
-                        
-                        <div style="margin-top: 40px; text-align: center;">
-                            <div style="font-size: 12pt; font-weight: bold;">UNIVERSIDADE FEDERAL DO DIREITO</div>
-                            <div style="font-size: 11pt;">Faculdade de Direito</div>
-                            <div style="font-size: 10pt; margin-top: 10px;">Av. da Justiça, 1000 - Centro</div>
-                            <div style="font-size: 10pt;">São Paulo - SP - CEP: 01000-000</div>
-                            <div style="font-size: 10pt;">Tel: (11) 3333-3333 | www.ufd.edu.br</div>
+                            <p><strong>NOTA FINAL CONSENSUS:</strong> 9.7/10.0</p>
+                            <p><strong>OBSERVAÇÃO:</strong> Trabalho aprovado por unanimidade pelos especialistas em ${areaMateria}.</p>
                         </div>
                     </div>
                 `;
                 
                 document.getElementById('academic-content-result').innerHTML = conteudo;
-                
-                // Mostrar resultado
                 document.getElementById('academic-result-container').classList.remove('hidden');
                 document.getElementById('btn-copiar-trabalho').classList.remove('hidden');
                 
-                // Ajustar scroll para mobile
                 if (isMobileDevice()) {
                     const resultContainer = document.getElementById('academic-result-container');
                     resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
                 
-                mostrarNotificacao(`Trabalho acadêmico completo gerado com sucesso! Avaliado por ${totalEspecialistas} especialistas.`, "success");
+                mostrarNotificacao(`Trabalho acadêmico completo gerado com sucesso! Avaliado por ${especialistasArea.length} especialistas em ${areaMateria}.`, "success");
             }, 1500);
         }
         
-        function gerarComentarioAvaliacao(especialista, materia) {
+        function gerarComentarioAvaliacaoAcademica(especialista, materia) {
             const comentarios = [
-                "Excelente trabalho, com fundamentação sólida e análise crítica pertinente.",
-                "A abordagem metodológica demonstra rigor acadêmico e compreensão profunda do tema.",
-                "Contribuição significativa para a discussão acadêmica na área, com análise inovadora.",
-                "Trabalho bem estruturado, com argumentação coerente e referências adequadas.",
-                "Análise perspicaz que combina teoria e prática de forma equilibrada."
+                "Excelente trabalho, com fundamentação sólida e análise crítica pertinente à área específica.",
+                "A abordagem metodológica demonstra rigor acadêmico e compreensão profunda do tema da disciplina.",
+                "Contribuição significativa para a discussão acadêmica na área, com análise inovadora e pertinente.",
+                "Trabalho bem estruturado, com argumentação coerente e referências adequadas à matéria.",
+                "Análise perspicaz que combina teoria e prática da área específica de forma equilibrada."
             ];
             
             return comentarios[Math.floor(Math.random() * comentarios.length)];
@@ -2851,64 +2951,201 @@
             });
         }
         
-        // FUNÇÕES DE RELÓGIO E CLIMA
-        function atualizarRelogio() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('pt-BR', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            document.getElementById('current-time').textContent = timeString;
-        }
+        // ==============================================
+        // FUNÇÕES DE EXPORTAÇÃO PARA WORD
+        // ==============================================
         
-        function obterClima() {
-            // Simulação de dados de clima
-            const climas = [
-                { temp: 22, condicao: "Ensolarado", icone: "fa-sun" },
-                { temp: 18, condicao: "Parcialmente nublado", icone: "fa-cloud-sun" },
-                { temp: 16, condicao: "Nublado", icone: "fa-cloud" },
-                { temp: 25, condicao: "Limpo", icone: "fa-sun" },
-                { temp: 20, condicao: "Algumas nuvens", icone: "fa-cloud-sun" }
-            ];
+        function salvarWord() {
+            const editor = document.getElementById('editor-a4');
+            if (!editor.innerText.trim()) {
+                mostrarNotificacao("Gere uma petição antes de exportar para Word.", "warning");
+                return;
+            }
             
-            const clima = climas[Math.floor(Math.random() * climas.length)];
+            mostrarNotificacao("Gerando documento Word no formato ABNT...", "info");
             
-            document.getElementById('current-weather').textContent = clima.condicao;
-            document.getElementById('current-temp').textContent = `${clima.temp}°C`;
-            document.getElementById('weather-icon').className = `fas ${clima.icone} weather-icon`;
-        }
-        
-        // FUNÇÕES COMPARTILHADAS
-        function confirmarReset() { 
-            if(confirm("Tem certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.")) {
-                location.reload(); 
+            try {
+                const { Document, Paragraph, TextRun, AlignmentType, HeadingLevel, Packer } = window.docx;
+                
+                // Obter o conteúdo HTML formatado
+                let htmlContent = editor.innerHTML;
+                
+                // Garantir que a estrutura da petição seja mantida
+                htmlContent = htmlContent.replace(/\n/g, '<br>');
+                htmlContent = htmlContent.replace(/<br><br>/g, '</p><p>');
+                htmlContent = `<p>${htmlContent}</p>`;
+                
+                // Criar parágrafos do documento Word
+                const paragraphs = [];
+                
+                // Adicionar título
+                paragraphs.push(
+                    new Paragraph({
+                        text: "PETIÇÃO JURÍDICA - INTELIGÊNCIA FORENSE PRO",
+                        heading: HeadingLevel.HEADING_1,
+                        alignment: AlignmentType.CENTER,
+                        spacing: { after: 400 }
+                    })
+                );
+                
+                // Adicionar data
+                paragraphs.push(
+                    new Paragraph({
+                        text: `Gerado em: ${new Date().toLocaleDateString('pt-BR')}`,
+                        alignment: AlignmentType.RIGHT,
+                        spacing: { after: 200 }
+                    })
+                );
+                
+                // Adicionar linha separadora
+                paragraphs.push(
+                    new Paragraph({
+                        text: "________________________________________________________________________",
+                        alignment: AlignmentType.CENTER,
+                        spacing: { after: 400 }
+                    })
+                );
+                
+                // Converter HTML para parágrafos do Word
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlContent;
+                
+                // Processar cada elemento
+                tempDiv.childNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        if (node.tagName === 'P' || node.tagName === 'DIV') {
+                            const text = node.textContent.trim();
+                            if (text) {
+                                // Verificar se é um título/header
+                                if (text.includes("EXCELENTÍSSIMO") || 
+                                    text.includes("PROCESSO Nº") || 
+                                    text.includes("PETIÇÃO ELABORADA")) {
+                                    paragraphs.push(
+                                        new Paragraph({
+                                            text: text,
+                                            heading: HeadingLevel.HEADING_2,
+                                            alignment: AlignmentType.LEFT,
+                                            spacing: { before: 200, after: 200 }
+                                        })
+                                    );
+                                } else if (text.includes("I -") || text.includes("II -") || text.includes("III -")) {
+                                    paragraphs.push(
+                                        new Paragraph({
+                                            text: text,
+                                            heading: HeadingLevel.HEADING_3,
+                                            alignment: AlignmentType.LEFT,
+                                            spacing: { before: 150, after: 100 }
+                                        })
+                                    );
+                                } else {
+                                    paragraphs.push(
+                                        new Paragraph({
+                                            text: text,
+                                            alignment: AlignmentType.BOTH,
+                                            spacing: { before: 100, after: 100 },
+                                            indent: { firstLine: 720 } // 720 twips = 0.5 polegadas
+                                        })
+                                    );
+                                }
+                            }
+                        } else if (node.tagName === 'BR') {
+                            paragraphs.push(
+                                new Paragraph({
+                                    text: "",
+                                    spacing: { after: 100 }
+                                })
+                            );
+                        }
+                    }
+                });
+                
+                // Adicionar rodapé
+                paragraphs.push(
+                    new Paragraph({
+                        text: " ",
+                        spacing: { before: 400 }
+                    })
+                );
+                
+                paragraphs.push(
+                    new Paragraph({
+                        text: "________________________________________________________________________",
+                        alignment: AlignmentType.CENTER
+                    })
+                );
+                
+                paragraphs.push(
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: "Documento gerado automaticamente pelo Sistema Inteligência Forense Pro",
+                                bold: true,
+                                size: 20
+                            })
+                        ],
+                        alignment: AlignmentType.CENTER,
+                        spacing: { before: 200 }
+                    })
+                );
+                
+                paragraphs.push(
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: "Com análise de especialistas por área do direito",
+                                italics: true,
+                                size: 18
+                            })
+                        ],
+                        alignment: AlignmentType.CENTER
+                    })
+                );
+                
+                // Criar o documento
+                const doc = new Document({
+                    sections: [{
+                        properties: {
+                            page: {
+                                margin: {
+                                    top: 1440,    // 1 polegada = 1440 twips
+                                    right: 1440,
+                                    bottom: 1440,
+                                    left: 1440
+                                },
+                                size: {
+                                    width: 11906, // A4 width in twips (21cm)
+                                    height: 16838 // A4 height in twips (29.7cm)
+                                }
+                            }
+                        },
+                        children: paragraphs
+                    }]
+                });
+                
+                // Gerar o arquivo Word
+                Packer.toBlob(doc).then(blob => {
+                    saveAs(blob, `Peticao_Inteligencia_Forense_Pro_${new Date().toISOString().split('T')[0]}.docx`);
+                    mostrarNotificacao("Documento Word gerado com sucesso!", "success");
+                }).catch(error => {
+                    console.error('Erro ao gerar Word:', error);
+                    mostrarNotificacao("Erro ao gerar documento Word. Tente novamente.", "error");
+                    
+                    // Fallback: oferecer para baixar como texto simples
+                    const textContent = editor.innerText;
+                    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+                    saveAs(blob, `Peticao_${new Date().toISOString().split('T')[0]}.txt`);
+                    mostrarNotificacao("Documento salvo como arquivo de texto (.txt)", "info");
+                });
+                
+            } catch (error) {
+                console.error('Erro ao processar Word:', error);
+                mostrarNotificacao("Erro ao processar documento Word.", "error");
             }
         }
         
-        function fecharModais() {
-            document.getElementById('modal-vade').style.display = 'none';
-            document.getElementById('modal-dicionario').style.display = 'none';
-            document.getElementById('modal-academico').style.display = 'none';
-            document.getElementById('modal-area-branco').style.display = 'none';
-            document.querySelector('.overlay').style.display = 'none';
-        }
-        
-        function fecharVade() { 
-            document.getElementById('modal-vade').style.display = 'none'; 
-            document.querySelector('.overlay').style.display = 'none'; 
-        }
-        
-        function abrirVade() { 
-            document.getElementById('modal-vade').style.display = 'block'; 
-            document.querySelector('.overlay').style.display = 'block'; 
-            
-            // Ajustar para mobile
-            if (isMobileDevice()) {
-                const modal = document.getElementById('modal-vade');
-                modal.scrollTop = 0;
-            }
-        }
+        // ==============================================
+        // FUNÇÕES DE EXPORTAÇÃO PARA PDF
+        // ==============================================
         
         function salvarPDF() { 
             const editor = document.getElementById('editor-a4');
@@ -2938,10 +3175,8 @@
                 pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
             };
             
-            // Salvar a posição atual do scroll para restaurar depois
             const scrollPosition = window.scrollY;
             
-            // Para mobile, garantir que o conteúdo esteja visível
             if (isMobileDevice()) {
                 editor.scrollTop = 0;
                 setTimeout(() => {
@@ -2957,6 +3192,65 @@
             }
         }
         
+        // ==============================================
+        // FUNÇÕES AUXILIARES
+        // ==============================================
+        
+        function atualizarRelogio() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-BR', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        function obterClima() {
+            const climas = [
+                { temp: 22, condicao: "Ensolarado", icone: "fa-sun" },
+                { temp: 18, condicao: "Parcialmente nublado", icone: "fa-cloud-sun" },
+                { temp: 16, condicao: "Nublado", icone: "fa-cloud" },
+                { temp: 25, condicao: "Limpo", icone: "fa-sun" },
+                { temp: 20, condicao: "Algumas nuvens", icone: "fa-cloud-sun" }
+            ];
+            
+            const clima = climas[Math.floor(Math.random() * climas.length)];
+            
+            document.getElementById('current-weather').textContent = clima.condicao;
+            document.getElementById('current-temp').textContent = `${clima.temp}°C`;
+            document.getElementById('weather-icon').className = `fas ${clima.icone} weather-icon`;
+        }
+        
+        function confirmarReset() { 
+            if(confirm("Tem certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.")) {
+                location.reload(); 
+            }
+        }
+        
+        function fecharModais() {
+            document.getElementById('modal-vade').style.display = 'none';
+            document.getElementById('modal-dicionario').style.display = 'none';
+            document.getElementById('modal-academico').style.display = 'none';
+            document.getElementById('modal-area-branco').style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        }
+        
+        function fecharVade() { 
+            document.getElementById('modal-vade').style.display = 'none'; 
+            document.querySelector('.overlay').style.display = 'none'; 
+        }
+        
+        function abrirVade() { 
+            document.getElementById('modal-vade').style.display = 'block'; 
+            document.querySelector('.overlay').style.display = 'block'; 
+            
+            if (isMobileDevice()) {
+                const modal = document.getElementById('modal-vade');
+                modal.scrollTop = 0;
+            }
+        }
+        
         function copiarLei() { 
             const texto = document.getElementById('vade-resultado').innerText;
             navigator.clipboard.writeText(texto).then(() => {
@@ -2968,7 +3262,6 @@
         }
         
         function mostrarNotificacao(mensagem, tipo) {
-            // Criar elemento de notificação
             const notificacao = document.createElement('div');
             notificacao.style.cssText = `
                 position: fixed;
@@ -2989,7 +3282,6 @@
                 word-break: break-word;
             `;
             
-            // Definir cores baseadas no tipo
             if (tipo === "success") {
                 notificacao.style.background = "rgba(46, 204, 113, 0.95)";
                 notificacao.style.color = "white";
@@ -3008,7 +3300,6 @@
                 notificacao.style.borderLeft = "4px solid #3498db";
             }
             
-            // Adicionar ícone
             let icone = "info-circle";
             if (tipo === "success") icone = "check-circle";
             if (tipo === "error") icone = "exclamation-circle";
@@ -3016,10 +3307,8 @@
             
             notificacao.innerHTML = `<i class="fas fa-${icone}"></i> <span>${mensagem}</span>`;
             
-            // Adicionar ao corpo
             document.body.appendChild(notificacao);
             
-            // Remover após 4 segundos
             setTimeout(() => {
                 notificacao.style.animation = "slideOut 0.3s ease";
                 setTimeout(() => {
@@ -3029,7 +3318,6 @@
                 }, 300);
             }, 4000);
             
-            // Adicionar keyframes para animação se não existirem
             if (!document.querySelector('#notification-styles')) {
                 const style = document.createElement('style');
                 style.id = 'notification-styles';
@@ -3047,43 +3335,37 @@
             }
         }
         
-        // Inicialização
+        // ==============================================
+        // INICIALIZAÇÃO
+        // ==============================================
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Focar no campo de relato
             const relatoField = document.getElementById('ia-relato');
             if (relatoField) {
                 relatoField.focus();
             }
             
-            // Inicializar mobile
             inicializarMobile();
             
-            // Inicializar relógio e clima
             atualizarRelogio();
             obterClima();
             
-            // Atualizar relógio a cada segundo
             setInterval(atualizarRelogio, 1000);
-            
-            // Atualizar clima a cada 5 minutos
             setInterval(obterClima, 300000);
             
-            // Mostrar informações do sistema
             setTimeout(() => {
                 if (isMobileDevice()) {
                     mostrarNotificacao("📱 Modo mobile ativado. Interface otimizada para dispositivos móveis.", "info");
                 } else {
-                    mostrarNotificacao("🚀 Sistema aprimorado! Agora com avaliação de TODOS os especialistas (juízes e professores com mestrado).", "info");
+                    mostrarNotificacao("🚀 Sistema aprimorado! Agora com especialistas específicos para cada área do direito.", "info");
                 }
             }, 1500);
             
-            // Ajustar ao carregar a página
             window.addEventListener('load', function() {
                 ajustarEditorMobile();
                 ajustarModaisMobile();
             });
             
-            // Ajustar ao mudar orientação
             window.addEventListener('orientationchange', function() {
                 setTimeout(() => {
                     ajustarEditorMobile();
@@ -3092,7 +3374,6 @@
             });
         });
         
-        // Melhorar toque em overlay
         document.querySelector('.overlay').addEventListener('touchend', function(e) {
             fecharModais();
             e.preventDefault();
